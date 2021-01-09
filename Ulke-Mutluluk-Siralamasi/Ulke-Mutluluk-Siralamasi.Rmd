@@ -1,0 +1,1055 @@
+---
+title: "2017 Yılı Ülkelerin Mutluluk Sıralamasına İlişkin Veri Analizi Ve Regresyon Modeli İle İncelenmesi "
+author: "Özgür Nurettin Öztürk-20161101078"
+date: "Haziran/2020"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: no
+    toc: yes
+    toc_float: yes
+    df_print: paged
+  html_notebook:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+---
+
+# GİRİŞ
+
+İstatistik, belirli bir amaç için veri toplama, tablo ve grafiklerle özetleme, sonuçları yorumlama, sonuçların güven derecelerini açıklama, örneklerden elde edilen sonuçları kitle için genelleme, özellikler arasındaki ilişkiyi araştırma, çeşitli konularda geleceğe ilişkin tahmin yapma, deney düzenleme ve gözlem ilkelerini kapsayan bir bilimdir. Belirli bir amaç için verilerin toplanması, sınıflandırılması, çözümlenmesi ve sonuçlarının yorumlanması esasına dayanır. Blalock’a göre istatistik olayları tek tek ya da seyrek olarak ortaya çıkan olayları inceleyen bir dal değildir.  
+
+*“İstatistik ile yalan söylemek kolaydır; istatistik olmadan gerçeği anlatmak zordur”* (A. Dunkels)
+
+*“Üç çeşit yalan vardır; yalan, kuyruklu yalan, istatistik.”* (Louis Brandeis) 
+
+Bu çalışmada 2017 yılı Dünya mutluluk skoru veri seti üzerinde veri analizi ve regresyon analizi üzerine çalışmalar yapılmıştır.  
+İlk Dünya Mutluluk Raporu, BM Yüksek Düzeyli Mutluluk ve refah toplantısını desteklemek üzere Nisan 2012'de yayınlandı. O zamandan beri dünya çok yol kat etti. Mutluluk gittikçe artan bir şekilde sosyal ilerlemenin ve kamu politikasının hedefi için uygun bir ölçü olarak görülmektedir. Haziran 2016'da OECD kendisini “insanların refahını hükümetlerin çabalarının merkezine koymak için büyüme anlatısını yeniden tanımlamayı” taahhüt etti. Şubat 2017'de Birleşik Arap Emirlikleri, Dünya Hükümeti Zirvesi kapsamında tam günlük bir Dünya Mutluluğu toplantısı düzenledi. Şimdi 20 Mart Dünya Mutluluk Günü'nde, bir kez daha Birleşmiş Milletler'de, tekrar Sürdürülebilir Kalkınma Çözümleri Ağı tarafından yayınlanan ve şimdi Ernesto Illy Vakfı'ndan cömert üç yıllık bir bağışla desteklenen Dünya Mutluluk Raporu 2017 oluşturuldu. 
+ 
+ *“Yuvarlak sayılar her zaman yanlıştır”* (Samuel Johnson) 
+ 
+*“İstatistiksel düşünme, gün gelecek tıpkı okuryazar olmak gibi iyi bir yurttaş olmanın en gerekli unsurlarından olacaktır”*  (H.G.Wells) 
+ 
+
+# 1 BÜYÜK VERİ KÜMELERİNDE VERİ ANALİZİ 
+
+Bir veri yığınında yapısını iyi anlamak üzere, çeşitli tekniklerin kullanıldığı bir yaklaşımdır. Günümüz bilgilsayar teknolojisi ve internet ortamı nedeniyle toplanan veriler çok büyük yığınlarına dönüşür. Bunlar üzerinde çözümleme yapmak için yeni kavramlar ve açıklamalar ortaya çıkar. 
+Temel veri analizi kavramları verinin büyüklüğünden etkilenmez. Düzleştirmeler, dönüşümler vb. kavramlar büyük veriler için de çok önemli çözümleme aracıdır. Fakat istatistiğin temek teknikleri ve kavramları, bazen uygulanmaz ya da yanlış yorumlar çıkartır. 
+Verinin istatistiksel analizlerden hazırlanması, ve düzenlenmesi gerekir. Gereksiz bilgilerin ayıklanması zaman olarak ve uygulanacak analizler için büyük önem taşır. Veri setindeki gözlemlerin değişkenlere genel durumunu değerlendirmek için tanımlayıcı istatistikler kullanılır. 
+ 
+## 1.1 Konum Ölçüleri
+ 
+Nicel bir veri kümesinde dağılımın çeşitli konumlarını tanımlamak için en sık kullanılan istatistiklerdir. 
+ 
+### 1.1.1. Aritmetik Ortalama
+
+Simetrik veya simetriği yakın veriler için her bir gözleme aynı ağılığın verildiği verilerin açıklamasında ve çıkarsamasında kullanılan konum ölçütüdür. 
+ 
+$$X ̅=(x_1+...+x_n)/n=1/n ∑ x_i$$
+ 
+### 1.1.3. Kesilmiş Ortlalama
+ 
+Kuyruk ucundaki gözlemlere 0 ve öteki gözlemlere 1 ağırlığının verildiği aritmetik ortalamadır. Bir kuyruktan, p oranındaki gözlemler çıkartılarak hesaplanır.
+
+### 1.1.4. Mod(Tepe Değer)
+
+Veride en sık tekrar eden gözlem değeridir. Aritmetik ortalama yerine başlangıç incelemesi için kullanılabilir. Verilerin tek tepeli olması tercih edilir. Fakat bazen iki tepeli, üç tepeli gibi çok tepeli olabilirler. Bu durumda karma dağılımlardan söz edilebilir. 
+
+### 1.1.5. Medyan(Ortanca)
+
+Özellikle grafik çizimlerinde, dağılım biçimi ve dönüşüm gerekliliği ile ilgili bilgi verir. Veriler sıralandığında ortada kalan değerdir.
+
+## 1.2. Yayılım(Dönüşüm) Ölçüleri
+
+Verilerin birbirlerinden ne kadar uzak olduklarını merkezi yayılım ölçüsü gösterir.
+
+### 1.2.1. Genişlik(Çeyrek değerler genişliği/DAG)
+
+Uç değerlerden etkilenmediğinden değişimin sağlam bir ölçüsü olarak düşünülebilir. Ölçüm sayısı ile birlikte artabildiklerinden sık kullanılır.
+
+### 1.2.2. Standart Sapma
+
+Varyansın tüm gözlemler üzerinden  karesel sapmaların bir ortalamasıdır. Bu neden ile uç değerlerden ertelenir.
+
+$$S=√(∑(x_i-x ̅)^2 )/(n-1) $$
+ 
+ 
+### 1.2.3. MAD
+
+Ortalama ya da Ortanca mutlak sapma anlamında bir değişkenlik ölçüsüdür;
+*Ortalama mutlak sapma, aritmetik ortalamadan mutlak sapmaların ortalamasıdır.
+$$MAD_{A.O.}=(∑|x_i-x ̅ |)/n$$
+*Ortanca mutlak sapma, aritmetik ortancadan mutlak sapmaların ortalamasıdır.
+$$MAD_O.=Ortanca(|x_i-ortanca(x)|$$
+
+## 1.3. İlişki Ölçüleri
+
+Bir veri kümesindeki değişkenlerin bağımsızlıkları ve etkinlikleri bakımından, ilişki katsayıları kullanıla bilir. Kovaryans, iki değişkenin arasındaki birlikte değişim miktarını verir.
+
+$$Cov(X,Y)=∑(x_i-x ̅)(y_i-y ̅)/n$$
+
+İkiden çok değişken için kovaryans matrisi, pozitif tanımlıdır ve değişkenlerin birlikte değişim miktarı ile ilgili bilgi verir.
+ 
+![](C:/Users/Ozgur/Desktop/Tez/Formul/Correlation.png)
+ 
+### 1.3.1. Pearson İlişki Katsayısı
+
+İki nicel değişken arasında ilişkinin derecesini belirlemek için kullanılır.
+$$r_{XY}=Cov(X,Y)/S_X S_Y$$
+
+### 1.3.2. Spearman İlişki Katsayısı
+
+İki sıralı (ordinal) değişken veya bir sıralı ve bir sürekli değişken arasındaki doğrusal ilişkiyi ifade eder. Değişkenler oransal ya da aralıklı ölçek ile elde edilmiş ancak normal dağılıma uygunluk göstermiyorsa da Spearman korelasyonu kullanılır.
+$$r_s=(6∑d^i )/(n(n^2-1))$$
+
+Spearman'in ρ katsayısı değerleri de (aynı Pearson'un çarpım-moment korelasyon katsayısı gibi) -1 ile +1 arasında değişir. Uç değerler (yani ρ=-1 ve ρ=+1 ve yakın değerler) iki değişken sıralaması arasında bağlantının çok iyi olduğunu (eğer sıralamalar noktalar olarak bir serpme diyagramına konulursa hepsinin çizilen bir doğru üzerinde olduğunu) gösterirler. Eğer ρ<0 ise, sıralamalar arasında ters yönlü değişim vardır; yani biri artınca diğeri azalır ve aksi olur. Eğer ρ>0 ise sıralamalar arasında birlikte (yani birlikte artma veya eksilme) değişme görülür. Eğer ρ=0 ise, sıralamalar arasında hiçbir bağlantını bulunmadığı (ve serpme diyagramı üzerinde noktaların rastgele dağıldıkları) sonucu çıkartılır.
+ 
+## 1.5.Grafik Gösterimler 
+
+Veri kümelerinin özetlemesinde en kolay ve yaralı teknikleridir.
+•	Değişkenler ile ilgili bilgi verici yapıdadır.
+•	Verilerdeki ilişki ve bağıntılardan, verileri tanımlamak interpolasyon ve extra polasyon yapmak istenebilir.
+
+### 1.5.1. Nokta Çizimleri
+
+Veri sayısının az olduğu durumlar için fikir edinmek amaçı ile, özellikle elde yapılacak basit grafiklerdir.
+•	Tek eksen üzerinde veri saçılımı gösterir.
+•	Nicel veriler için geçerlidir.
+•	Uç değerler ve gözlem etkinlikleri açısından bilgi vericidir.
+•	Verilerdeki boşlukları (gap) gösterir.
+•	Değişkenlerin karşılaştırılmasında yaralıdır.
+•	Dağılım hakkında bilgi vermez.
+Histograma benzer. Verilerin daha sık aralıkta ve böylece daha dar bir alanda özetlendiği çizimlerdir.
+ 
+![](C:/Users/Ozgur/Desktop/Tez/Formul/point.png) 
+ 
+### 1.5.2. Kutu Grafiği
+
+Verilerin çeyreklik değerlerine göre gösterimidir. Histogram ve nokta çizimleri farklı görünüme sahip olamakla birlikte veri ile ilgili yarıntılı bilgi verir.
+	Konum, yayılım ve çarpıklık ile ilgili bilgi verir.
+	Dağılımın kuyrukları ve bu kuyrukların yayılım ile ilgili bilgi verir.
+	Uç değerleri görmek için olanaktır. Bu değerler aykırı değerde olabilir.
+	Birden fazla veri kümesinin karşılaştırılmasına yararlıdır.
+	Uç değerlere karşı dirençlidir.
+Grafiğin çizimi için ortanca, birinci ve üçüncü çeyrek değerleri hesaplanır ve 
+
+$$DAG (Çeyrekler Arası Uzaklık)=d=Q_3-Q_1$$
+
+farkı bulunur. Q_3 ve Q_1farkı arasında yatay veya dikey eksende kutu çizilir. Kutunun içine ortanca çizgisi çizilir ve her iki ucundan,
+$A=Q_1-1.5d$ 		ve		 $B=Q_3+ 1.5d$
+Uzunlukları kuşkulu gözlem sınırları olarak tanımlar. Bunlara eşik değerleri denir.Uç değerler eşik değerlerinin dışında olur ve işaretler.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/box.png)
+
+### 1.5.3 Histogram
+
+Veri dağılımını özetlemenin en çok kullanılan yoludur. Veri genişliğini eşit uzunluktaki aralıklara bölerek gösterilir.
+•	Büyük veri kümelerinde kullanılır.
+•	Dağılım hakkında bilgi verir.
+•	Genellikle verini yoğunlaştığı konumları gösterir.
+•	Büyük veya küçük değerlere çarpık olması verilerde dönüşüm yapılabilceğini gösterir.
+ 
+![](C:/Users/Ozgur/Desktop/Tez/Formul/histogram.png)
+
+Çizimlerde alınacak sınıf sayısı için birçok eşitlik kullanılır. Büyük veri kümeleri için Sturges’in 
+$$k=⌈loga(2n)+1 ⌉ ~ ve~ h=Genişlik/k$$
+
+eşitliği tercih edilir. Burada h =Sınıf sayısıdır.
+
+### 1.5.4. Q-Q Plot
+
+Veri kümesini belirli bir dağılıma uyumunun incelenmesidir. Genelde en çok veri kümesinin normal dağılımlı olup olmadığını anlamak için yapılır.Ayrıca iki ayrı veri kümesinin aynı dağılımlı olup olmadığını göstermek içinde kullanılır.  
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/qq.jpg)
+
+### 1.5.5. Saçılım Grafiği
+
+İki ya da daha çok değişken arasındaki çizimler, aykırı değerlerin varlığı bakımından, değişkenlerin birliktelikleri yada bağımsızlıkları değişkenlerin etkinlikleri ve işlevsel yapı bakımından önemli bilgi verirler. İki değişken arasındaki ilişkinin yapısını ve yönünü verir.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/scatter.png)
+
+## 1.6. Verilerdeki Eksik Değerler
+
+Veri kümesinde eksik değerlerin varlığı ön inceleme sırasında giderilmesi gereken bir sorundur. Bir gözlemin değişken değerlerinin  tümünde eksik gözlem ise veriden çıkartılır. Bu değerlerden ötürü çok sayıda gözlemin çıkartılması bilgi kaybına neden olur. Eksik değerler rastgele dağılmamış ise gözlemlerin çıkartılması, örneklemin bozulmasına ve değişimin yeterince açıklanamamasına neden olur. Eksik değerler durumunda, sorunu gidermek için farklı çözüm yolları vardır.
+
+### 1.6.1. Çözüm Yolları 
+
+Eksik değer durumunda , kümeden çıkartma yada değer atama yöntemleri kullanılır.
+**1- Gözlemlerin Çıkartılması**
+Az sayıda eksik değer için yaralıdır.Bu değişkenler rastgele dağılmamış ise veri kümesinden çıkartılması uygun değildir.
+**2-Ön Bilgi Kullanarak Kestirme**
+Özel bir konu için toplanmış verilerde ortaya çıkan eksik gözlemlerle ilgili yaklaşık kestirim yapılabilir. Bu kestirim önceki araştırmalardan yola çıkılarak yapılır.
+**3-Ortalama/Ortanca Kullanma**
+En kolay ve en basit yol her bir değişkenin eksik olmayan değerlerinin ortalamasını/ortancasını kullanmaktır. Bu ortalama/ortanca o değişkendeki eksik gözleme yazılır.
+**4-Regresyon Yöntemi**
+Kestirilecek eksik değerin bulunduğu değişken bağımlı (y) , diğer değişkenler bağımsız değişken olarak alınır. Bu değişkenlerden elde edilen denklemleden o gözlem için ön kestirim yapılır.
+
+## 1.7. Veri Analizinde Dönüşümler
+
+Ham veri üzerinde daha bilgi verici olması ve daha iyi özetleme yapmak için veriler üzerinde dönüşümler yapmak gerekir. Dönüşümler,
+•	Veriyi basitleştirmek, yorumlamayı kolaylaştırmak,
+•	Simetrikliği veya normalliği sağlamak,
+•	Doğrusallık veya doğru fonksiyonel biçimi yakalamak,
+•	Gözlemler arasındaki bağımlılığı kaldırmak için kullanılır.
+
+### 1.7.1. Logaritmik Dönüşüm
+
+Sağa veya sola çarpık değişim aralığının yüksek olduğu ve merkezindeki simetrinin önemli olduğu veri setlerinde varyans dengeleme dönüşümü yapılır.Veri setindeki tüm değerlerin logaritması alınır. Fakat yorum yaparken verileri eski haline dönüştürülmelidir.
+
+
+# 2. NORMAL DAĞILIM
+
+Normal dağılım, Gauss dağılımı olarak da bilinmektedir. Standart normal dağılım bir veri setinde ortalamanın 0, varyansın ise 1 olduğunu durumda sağlanmaktadır. Elimizdeki verilerin ortalamalarını çizgi grafiği ile gösterecek olursak, grafiğin orta noktasında çizginin yüksek olduğu, sağ ve sol kenarlara doğru yüksekliğin azaldığını görebiliriz. Bu yazımızın görseli bir önceki cümleyle açıklanan grafik örneğidir.
+Normal Dağılım Hangi Amaçla Kullanılır?
+Normal dağılım istatistiksel birtakım analizleri yapmadan önce uygulanan ve hangi analizi yapmamıza karar veren yardımcı bir analizdir. Örneğin iki farklı (bağımsız) grubun tek ölçüme ait ortalamalarının karşılaştırılması için bağımsız örneklem T testi veya Mann Whitney U testi kullanılabilir. Veri setimizdeki veriler normal dağılım gösteriyor ise bağımsız örneklem t testi kullanılır. Özellikle uluslararası dergilerde makale yayınlanacak ise yayın kurulları normal dağılım testi yapılıp yapılmadığına dikkat etmektedir. Ülkemizde ise yakın zamanlarda bu analizin yapılması istenilmeye başlanmıştır. Özellikle tez çalışmalarında normal dağılım testinin mutlaka yapılmasına özen göstermek gerekir.
+$$φ_(μ,σ^2 ) (x)=1/(σ√2π) e^{-(x-μ)^2/2σ^2 }$$
+
+## 2.1. Standart Normal Dağılım
+
+Normal dağılımı kullanarak bazı olasılık değerlerini elde etmek çok zor ve zahmetli bir iştir. Bu yüzden elde edilen normal dağılımın ortalaması 0 a ve varyansı da 1 e eşitlenerek daha kolay işlem yapılması sağlanabilir. Bu işlem için kullanılan yönteme ise standart normal dağılım denir.
+$$Z= (x-μ)/σ$$
+
+## 2.2.Büyük Sayılar Yasası
+
+Büyük sayılar yasası bir rassal değişkenin uzun vadeli kararlılığını tanımlayan bir olasılık teoremidir. Sonlu bir beklenen değere sahip birbirinden bağımsız ve eşit dağılıma sahip bir rassal değişkenler örneklemi verildiğinde, bu gözlemlerin ortalaması sonuçta bu beklenen değere yakınsayacak ve bu değere yakın bir seyir izleyecektir.
+Büyük sayılar yasası bir zarın peş peşe atılması ile örneklenebilir. Öyle ki, multinom dağılımı sonucunda 1, 2, 3, 4, 5 ve 6 sayılarının gelme olasılığı eşittir.
+(2 + 2 + 3 + 4 + 5 + 6) / 6 = 3,5 olur.
+
+## 2.3. Merkezi Limit Teoremi
+
+Bağımsız ve aynı dağılımı gösteren değişkenlerin toplamı ya da aritmetik ortalaması yaklaşık olarak normal dağılım halini alır. Fakat bu işlemin gerçekleşmesi için yeterli büyüklükte bir değişken uzayı büyüklüğüne sahip olmanız gerekmektedir.
+Olasılıkta çekim gücü gösteren bir dağılım vardır. Ve ortalamalar belirli bir limitten sonra dağılım olarak bu dağılıma yakınsar. Dağılım ne şekilde olursa olsun n sayısı artış gösterdikçe limitte ortalaması μ olan bir standart dağılıma yakınsama gösterir.
+$$S_n=  X_1+⋯+X_n=∑X_i $$
+
+Rassal değişkenlerin toplamı olmak üzere, 
+$$Z_n=(S_n-nμ)/(σ√n)$$
+
+dağılım bu şekilde olacaktır. n sayısı artış gösterdikçe ortalamalar normal dağılıma yaklaşmaktadır bu sayı 29 olarak düşünülmüştü fakat son zamanlarda 100 olması gerekliliği konusunda birçok çevrelerce fikir birliği yaşanmaktadır. Bu sayının belirlenmesinde ana kütlenin çarpıklık göstermesi en önemli kriterdir.
+Bu nedenle çıkarımsal istatistik yöntemlerinden bir tanesi olan Student-t dağılımı için istenen n>30 değeri de aslında bazı çalışmalarda gösterilmiştir ki bu değerler aslında her durum için yeterli değil. Fakat bir çok durumda halen n>30 kriteri uygulanmaya devam etmektedir.
+
+## 2.4. Çarpıklık Ve Basıklık Ölçüleri
+
+### 2.4.1.Çarpıklık$(α_3)$
+
+Bir dağılıma ilişkin ölçme sonuçlarının nasıl dağıldığı hakkında bilgi verir. 
+
+* Momentlere Dayalı Çarpıklık Ölçüsü
+$$α_3=M_3/S^3 =((∑(x_i-x ̅)^3 )/n)/S^3$$ 
+
+$α_3=0$ ise veri simteriktir 
+
+$α_3>0$ ise veri sağa çarpık
+
+$α_3<0$ ise veri sola çarpık
+
+
+### 2.4.2. Basıklık$(α_4)$
+
+Basıklık bir sınıftaki değişim miktarının göstergesidir.
+
+* Momentlere Dayalı Çarpıklık Ölçüsü
+
+$$α_4=M_4/S^4 =((∑(x_i-x ̅)^4 )/n)/S^4 $$
+
+$α_4=3$ ise veri normaldir
+
+$α_4>3$ ise verinormale göre sivridir
+
+$α_4<3$ ise veri normale göre basıktır
+
+## 2.5. Veri Setindeki Değişkenleri Normalliğinin İncelenmesi
+
+Normallik varsayımının incelemesinin amacı verilmiş bir veri dizisinin normal dağılıma uygunluk iyiliğinin incelenmesidir. Test edilmesinde grafiksel yöntemler ve hipotez testleri en çok kullanılan yöntemlerdir.
+ 
+![](C:/Users/Ozgur/Desktop/Tez/Formul/normallik.png)
+
+
+# 3.VARYANS ANALİZİ (ANOVA)
+
+Varyans analizi (ANOVA), k gruptan (k>2) elde edilen veri setinde incelenen değişkene ait olan genel varyansı (genel değişimin), bu değişime katkıda bulunan öğelerine ayırarak analiz etmeyi sağlayan bir yöntemdir. Varyans analizi veri yapısına bağlı olarak çok değişik işlevler yerine getiren bir yöntemdir. Veri yapısına ve çalışma dizaynına göre değişik modeller içerir.
+
+## 3.1.Tek Yönlü Varyans Analizi(One-Way Anova)
+
+Bağımsız k>2 gruplu bir çalışma grubunda, incelenen bir değişkene ait elde edilen verilerin analizinde yararlanılan bir yöntemdir. K bağımsız örneklem varyans analizi olarak tanımlanabilmektedir. Bağımsız örneklerde t testinin ikiden fazla grup için genellenmiş bir şeklidir.
+***Tek yönlü varyans analizine ait varsayımlar;***
+
+*	İncelenen değişken (Y) her bir ana kütlede normal dağılım göstermelidir. 
+
+*	Ana kütle etkileri toplanabilir olmalı ve etkilerin toplamı sıfır olmalıdır.
+
+*	Grup ortalamaları ve standart sapmaları arasında bir doğrusallık olmamalıdır.
+
+Birbirinden bağımsız $𝜇_1, 𝜇_2, … , 𝜇_𝑘$ ortalamalı ve $𝜎^2$ varyanslı normal dağılım gösteren k tane ana kütleden ni hacimli (i=1,2,…,k) rastgele örnek alınarak elde edilen veri setini analiz etmek için tek yönlü varyans analizi kullanılır.
+Tek yönlü varyans analizinde test edilen hipotezler aşağıdaki gibidir.
+$ 𝐻0: 𝜇1 = 𝜇2 = ⋯ = 𝜇𝑘$
+
+$ 𝐻1: En~ az~ bir~ grup~ortalaması~ diğerlerinden~ farklıdır. $
+ 
+Burada ana kütlelerden alınan örnekler birbirlerinden bağımsızdır ve örnek birim sayılarının benzer olması gerekmez. Tek yönlü varyans analizi incelenen değişken genel olarak 𝑌𝑖𝑗 olarak gösterilir. Burada;
+i=1,2,…,k ve j=1,2,…, ni olmak üzere
+k: grup sayısını 
+j: birim sayısını 
+ni : i. grupa ait örnek büyüklüğünü göstermektedir.
+Buradan yola çıkarak incelenen değişkene ait genel ortalama,
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/1.png)
+
+
+
+**Bu durumda genel kareler toplamı,**
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/2.png)
+
+Genel kareler toplamı gruplar arası kareler toplamı
+ve grup içi kareler toplamı olarak parçalanabilir.
+**GKT=GAKT+GİKT**
+Grup içi kareler toplamına hata kareler toplamında
+denilmektedir.
+**Gruplar arası kareler toplamı,** 
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/3.png)
+
+**Grup içi kareler toplamı,**
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.png)
+
+Genel serbestlik derecesi (gsd)=N-1
+Gruplar arası serbetlik derecesi(gasd)=k-1
+Grup içi serbestlik derecesi (hsd)=N-k
+$$N-1=(k-1)+(N-k)	$$								
+
+Kareler toplamları ve bir kare toplamına ait serbestlik dereceleri kullanılarak varyans tahminleri olan kareler ortalamaları hesaplanır. 
+Gruplar arası kareler ortalaması=GAKT/gasd 
+Grup içi kareler ortalaması=GİKT/hsd 
+Grup içi kareler ortalaması aynı zamanda hata kareler ortalaması olarak bilinir ve anakütle varyansının tahmincisidir. tek yönlü varyans analizi aruplar arasınsaki değişimin önemliliğini test etmek için F test istatistiği kullanılır.
+$$𝐹 = 𝐺𝐴𝐾𝑂/𝐻𝐾𝑂$$
+
+ F test istatistiği iki serbestlik derecesine sahip F dağılımı gösterir. Bu dağılımın birinci serbestlik derecesi pay serbestlik derecedir sd1=gasd’dir. İkinci serbestlik derecesi payda serbestlik derecesidir ve sd2=hsd’dir.
+Bu durumda hesaplanan F test istatistiği F dağılımından elde edilen F kritik değerine göre
+karşılaştırılır ve
+$F_{test}<F_{0.05,sd_1,sd_2}$ ise p>0.05 olarak hesaplanır. Budurumda $H_0$ hipotezi rededilmez.
+$F_{test}>F_{0.05,sd_1,sd_2}$ ise p<0.05 olarak hesaplanır. Bu durumda da $H_0$ hipotezi rededilir.
+Tek yönlü varyans analizi sonuçları aşağıdaki gibi özet bir tablo halinde sunulur.
+
+Değişim aynağı |Serbestlik Derecesi|Kareler Toplamı| Kareler Ortalaması|F İstatistiği|P Değeri
+-------------- |-------------------|---------------|-------------------|-------------|
+Gruplar Arası  |       k-1         |     GAKT      |      GAKO         |  GAKO/GİKO  |
+Grupu İçi(Hata)|       N-k         |     GİKT      |      GİKO         |             |         
+Toplam(Genel)  |       N-1         |     GKT       |        -          |             |
+
+### 3.1.1. Kruskal-Wallis H Testi
+Kruskal-Wallis H testi (KWH) parametrik olmayan tek yönlü varyans analizi yöntemidir. K bağımsız örneğin benzer ortanca değerli ana kütlelerin rastgele örnekleri olup olmadığını test eder. KWH testi uygulanacak verilerin aralıklı ya da oransal ölçekli olması gerekir.
+
+**KWH testinde aşağıdaki hipotezler test edilir.**
+
+$H_0$: k örnek benzer medyanlı ana kütlelerden alınmış örneklerdir.
+
+$H_A$: k örnekten an az birinin medyanı diğerlerinden farklıdır.
+
+KWH testinde gözlem değerleri yerine bu değerlere ait sıralama puanları kullanılır. Her grubun sıralama puanları toplamı ele alınarak H test istatistiği aşağıdaki gibi hesaplanır.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/5.png)
+
+Burada $R^i$ i. Gruba ait sıralama puanlarının ortalamasını, 𝑅 ise sıralama puanlarının genel ortalamasını göstermektedir.
+H test istatistiği (k-1) serbestlik dereceli ki-kare dağılımı gösterir ve
+H< X0.05,(k-1) ise P>0.05 olarak elde edilir ve grupların medyan değerleri farklı değildir sonucuna varılarak $H_0$ hipotezi rededilmez.
+H> X0.05,(k-1) ise P<0.05 olarak elde edilir ve grupların medyan değerleri farklı değildir sonucuna varılarak $H_0$ hipotezi rededilir.
+
+
+# 4. REGRESYON ANALİZİ
+
+## 4.1. Çoklu Doğrusal Regresyon
+
+k sayıda değişkenin ilişkileri ölçmek için kullanılır. Hem tanımlayıcı hem de çıkarımsal istatistik sağlar. Basit doğrusal regresyon bize normal dağılmış, hakkında aralıklı/oranlı ölçekle veri toplanmış iki değişken arasında doğrusal ilişki olup olmadığını test etme olanağı verir. Değişkenlerden biri tahmin, biri sonuç değişkenidir. k sayıda bağımsız değişkenin olduğu doğrusal regresyon modeli aşağıdaki gibi yazılır. 
+$$y= β_0+β_1 X_1+β_2 X_2+⋯+β_k X_k+ε$$
+                                                                                (4.1)
+											
+### 4.1.1. En Küçük Kareler Kestirimi
+
+$β_0, β_1, β_2,..., β_k$ parametreleri bilinmeyenlerdir ve örneklem verileri üzerinden kestirimler gerekir. $(y_1,x_11,x_12,…,x_1k ),…,(y_n,x_n1,x_n2,…,x_nk )$ olmak üzere n sayıda ve k bağımsız değişkenden oluşan veri kümesi olduğu varsayılır.
+
+#### 4.1.1.1. Regresyon Katsayılarının En Küçük Kareler Kestirimi
+
+$y_i, β_1, β_2,..., β_k$  gözlemleri ile regresyon doğrusu arasındaki farkların en küçük olacak şekilde kestirilir. Denklem (4.1)’deki regresyon katsayılarının kestirimi için kullanılır. n>k gözlemin olduğunu varsayılarak aşağıdaki denklem yazılır.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.1.png)
+
+En küçük kareler fonksiyonu aşağıdaki gibidir:
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.2.png)
+
+Denklem (4.2)’indeki  $β_0 , β_1,β_2,..., β_k$   göre ayrı ayrı türevi alınıp sıfıra eşitlenirse,
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.3.png)
+
+Denklemini verir. Bu denklemler en küçük kareler normal denklemleri olarak adlandırılır. 
+Normal denklemlerinin çözümü β_0 , β_1 〖,β〗_2,..., β_k   en küçük kareler kestiricilerini verecektir.
+Çoklu regresyon modelleriyle ilgilenirken onları matris içinde ifade daha uygundur. Verilerin ve sonuçların daha kısa ve öz bir biçimde sağlar Denklem(4.2)’da verilen modelin matris gösterimi,
+$$y=Xβ+ε$$
+
+biçimindedir. Buradak, matrisler aşağıdaki gibidir;
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.4.png)
+
+y:Gözlemler vektörü
+X:Bağımsız değişkenler matrisi
+β:Regeresyon Katsayıları vektörü
+ε:Rastgele hatalar vektörü
+Aşağıda verilen S(β) fonsiyonunu minimize ederek $\hat{\beta}$ en küçük kareler kestiricileri vektörünü elde ederiz:
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.5.png)
+
+S(β) aşağıdaki gibi elde edilir:
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.6.png)
+
+Denklem (4.3)’indeki  β’ya göre türevi alınıp basitlştirilirse:
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.7.png)
+
+Denklem(4.4)’ün matris gösterimi aşağıdaki gibidir
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.8.png)
+
+Denklem (4.5)’ün matris gösterimi aşağıdaki gibidir
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.9.png)
+
+Denklemi (4.6) çözmek için her iki tarafı (X’X)-1 ile çarpılır. β’nın en küçük kareler kestiricisi bulunur.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.10.png)
+
+#### 4.1.1.2. $σ^2$’nin kestirimi
+
+İdeal olarak bu kestirimin kurulan modelin yeterliliğine bağlı olmaması tercih edilir. Bu ise yalnızca x’in en az bir değeri için y üzerinde farklı gözlemler olduğunda ya da $𝜎^2$’ye ilişkin önceliğinden elde edilmiş bilgi bulunduğunda mümkün olmalıdır. Bu yaklaşım kullanılamadığında  $𝜎^2$, artık veya hata kareler toplamından elde edilir.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.11.png)
+
+$e=y-X\hat{\beta}$ yerine konulmasıyla aşağıdaki ifade elde edilir.
+
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.12.png)
+
+Denklem (4.7)’den son denklem aşağıdaki gibi olur.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.13.png)
+
+Artık kareler toplamını n-2 serbestlik derecesine sahiptir. SSRes’in beklenen değeri $E(SS_{Res})=(n-p)σ^2$ olduğu göstermektedir; dolayısı ile $σ^2$’nin yansız bir kestiricisi aşağıdaki gibidir:
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.14.png)
+
+#### 4.1.1.3. Dummy Değişken 
+
+2 kategorisi olan bir değişkeni 1 ve 0 şeklinde kodladığımızda aslında tek kategoriye indirmiş oluyoruz. Örneğin erkek=0 kadın=1 olarak kodlandığında değişkeni erkek olmak ya da olmamak şeklinde yorumlayarak regresyon analizi yapılır. Burada yaptığımız bir grubu referans grubu alıp sadece diğer grubun verileri ile analiz yapıp daha sonra elde edilen regresyon katsayısını da analize giren grup üzerinden yorumlamaktır.
+3 kategorisi olan değişkenlerde bunu nasıl başaracağız? Burada yapmamız gereken uygulama aynı değişken için 1. kategoride olup 2 ve 3.  kategoride olmayanları, 2. kategoride olup 1. ve 3. kategoride olmayanları, 3. kategoride olup 1. ve 2. kategoride olmayanları belirtmek olacaktır. 2 kategorili durumda olduğu gibi tek değişkenle bunu başarmamız mümkün değildir. Öncelikle üç kategoriden bir tanesini referans grup olarak belirlememiz gerekmektedir. Daha sonra 2 tane yapay değişken üretmemiz gerekmektedir (k-1 sayıda yapay değişken). Bu iki yapay değişkenlerde referans grubuna ve hesaba katılmayan gruba sıfır hesaba katılan gruba da 1 rakamını gireceğiz.
+
+### 4.1.2. Belirtme Katsayısı
+
+Regresyonda amaçlardan birinin de bağımlı değişkendeki  kaynağını araştırmak için kullanılır.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.15.png)
+
+TKT:Toplam kareler Toplamı(Total Sum Of Square/SYY)
+RKT:Regresyon Kareler Toplamı(Regression Sum Of Squares/SSReg)
+AKT:Artıklar Kareler Toplamı(Residuals Sum Of Squares/SSRes)
+Bu sonuçlara göre bağımsız değişkenin bağımlı değişkendeki değişimin % kaçını açıkladığınının göstergesi olan belirtme katsayısı şu şekilde tanımlanır.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.16.png)
+
+k tane bağımsız değişkenin doğrusal regresyon modelinde belirleme katsayısı bağımlı değişkenin % kaçını açıkladığını belirtir. Belirtme katsayısı iki bağımsız değişkenli doğrusal regresyon model için;
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.17.png)
+
+ile hesaplanır. Belirtme katsayısının yukarıdaki eşitlik ile hesaplanması fazla zaman alır. Çünkü Y ̂_i değerlerini tek tek hesaplamak gerekir. Matris işlemleri ile $\hat{Y}_i$değerinin hesaplanmasına gerek yoktur. Denklem (4.8)’te verilen aşağıdaki eşitlikler verilmişti.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.18.png)
+
+Bu durumda belirme katsayısı;
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.19.png)
+
+eşitliği şeklinde olur.
+
+### 4.1.3 Kısmi F Testi
+
+$x_1,...,x_k$ bağımsız değişkenleri arasında doğrusal ilişki olup olmadığını araştırmak için kullanılan testdir. Uygun hipotezler aşağıdaki gibidir:
+$$H_0=β_1=β_2=...=β_k$$
+$$H_A=En~az~biri~ sıfırdan~ faklıdır.$$
+
+$H_0$ hipotezinin reddedilmesi için $x_1,...,x_k$ bağımsız değişkenlerinden en az birinin modele anlamlı katkı sağlaması gerekmektedir. Bu test basit doğrusal regresyonun genelleştirilmesidir.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.20.png)
+
+$H_0$ hipotezi doğru iken;
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.21.png)
+
+olacak şekilde dağılır. Ve F istatistiğinin tanımından;
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.22.png)
+
+oranının Fk,n-k-1 dağıldığı görülür. $H_0$ hipotezini test etmek için $F_h$ test değeri hesaplanır ve 
+$F_h> F_{k,n-k-1}$ geçerli ise $H_0$ reddedilir.
+
+### 4.1.5. Kısmi Korelasyon Katsayısı
+
+Y ve $X_1$§ değişkenleri arasındaki korelasyon katsayısı hesaplanırken herhangi bir başka değişkenin etkisinin Y ve $X_1$ değişkenlerini üzerindeki etkisi arındırıldıktan sonraki iki değişkenin arasındaki korelasyon katsayısıdır. 
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.23.png)
+
+### 4.1.6. Artıkların İncelenmesi
+
+**Artıkların(Hataların) Tanımı:**
+
+Artıklar $e_i=y_i-y ̂_i$ olarak tanımlanır. $y_i$ gözlem $y ̂_i$ ise regresyon sonucu elde edilen değerdir. Artıkların analizi farklı türdeki model yetersizliklerini ortaya çıkarılmasında etkilidir. Artık çizimleri regresyon modelinin verilere ne kadar uyumlu olduğunu gösterir. Artıklar sıfır ortalamaya sahip olup yaklaşık ortalama varyansları MSRes değeridir.Standartlaştırılmış artık: Bir artığın MSRes değeri ile kestirildiğinden artıklar için standartlaştıırlmış artık denir. 
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.24.png)
+
+Standartlaştırılmış artık $(|d_i|>3)$ potansiyel bir aykırı değer işaretidir.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/artik.png)
+
+**1. Sabit Varyanslılık **
+
+Hata terimi varyansı, bağımsız değişkendeki değişimlere bağlı olarak değişiyorsa değişen varyans, değişmiyorsa sabit varyans söz konusudur. Değişen Varyans $Var(ε_i)=E(ε^2_i)=σ^2_{ε_i}, ~ε_i$ hata teriminin varyasının farklı olduğunu gösterir.
+
+**Değişen varyanslığın nedenleri şu şekilde sıralanabilir;**
+
+*	Değişkenlerden birisinin çarpık olması.
+	
+*	$y ̅$ ile $σ^2_y$ ilişkili olması.
+	
+*	Bir bağımsız değişkenin model dışında kalması.
+	
+**Değişen varyansılılığın sonuçları;**
+
+*	Minimum varyanslılık ortadan kalkar.
+	
+**Değişen varyansılılığın ortya çıkartılması;**
+
+*	Grafik ile ortaya çıkartılır.
+	
+**2. Hataların Normal Normal Dağılması**
+
+Q-Q çizimleri ile bulunur. Kesikli veri veya farklı dağılımlı olması yüzünde ortaya çıkar. Gidermek için dağılıma uygun regresyon modeli veya dönüşüm yapılmalıdır.
+
+### 4.1.7. Otokorelasyon (İlişkili Hatalar)
+
+Çoklu doğrusal regresyon analizinde otokorelasyon, hata teriminin birbirini izleyen değerleri arasındaki ilişkiyi tanımlar. Bu durum, genel doğrusal regresyon modelinin önemli bir varsayımından sapmadır. Genel doğrusal regresyon modeli varsayım gereği olarak, hata terimleri arasında bir ilişki yoktur.
+Gözlemlenen değerler arasındaki benzerliğin, zamansal gecikmenin bir fonksiyonu olarak ifadesidir. Otokorelasyon analizi tekrar eden örüntülerin tanınması, bir sinyalin kayıp temel frekansının tespit edilmesi gibi amaçlar için kullanılan bir matematiksel araçtır. Sinyal işlemede fonksiyonların ya da dizilerin analizi için sıkça kullanılır.
+
+**Otokorelasyonun nedenleri şu şekilde sıralanabilir;**
+
+*	Bazı açıklayıcı değişkenlerin modele alınmaması.
+
+*	Modelin matematiksel biçiminin yanlış seçilmesi.
+
+*	Açıklanan değişkende ölçme hatası olması.
+
+*	Verilerin işlenmesi.
+
+*	Hata teriminin yanlış belirlenmesi..
+
+**Otokorelasyon sonucunda ise;**
+
+*	Parametre tahminleri sapmasız olmakla birlikte etkin değildir.
+
+*	Hata teriminin varyansı, olduğundan küçük tahmin edilmektedir.
+
+*	E.K.K. tahminlerine göre yapılan öngörüler etkin değildir.
+
+**Otokorelasyonun ortaya çıkartılması;**
+
+*	Grafik ile ortaya çıkar.
+
+*	eilerin dağılımı rastgele değilse.
+
+*	Durbin-Watson Test istatistiği ile.
+
+Ardaşık hata terimlerini bağımsız olamdığında yapılacak tahminler yanlış olacağı için hata terimlerinin bağımsızlığının test etmek gerekir. En çok bilinen testlerden biri Durbin-Watson testidir.
+
+**Durbin-Watson Testi**
+
+Bu test sadece birinci derecedeki otokorelasyonun bulunup bulunmadığını sınamaktadır.
+$$H_0:P=0(Ototkorelasyan yoktur.)$$
+
+$$H_A:P≠0(Otokorelasyon vardır.)$$
+
+seçilen bir anlamlılık düzeyi ile gözlem sayısı ve açıklayıcı değişken sayısına göre, Durbin-Watson tablosundan, d istatistiğinin alt $(d_L)$ ve üst $(d_U)$ sınırları bulunur.Sonra Kritik oran d istatistiği hesaplanır.
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/4.25.png)
+
+### 4.1.7. Çoklu Bağıntı
+
+Regresyon analizinde parametre kestirimlerinin yansızlığı ve duyarlılığı, ifade edilen bu varsayımların gerçekleşmesine bağlıdır. Ancak bazı olayların analizinde bu varsayımlardan sapmalar görülmektedir. Bunlardan biri olan bağımsız değişkenlerin birbirleriyle ilişkili olması durumu çoklu bağıntı olarak ifade edilmektedir. 
+
+#### 4.1.7.1. Varyans Şişirme Oranı
+
+Çoklu bağıntının belirlenmesinde en kolay ve en sık kullanılan tekniklerden birisidir. Çünkü istatistik paket programlarının çoğunda kısmi korelasyon katsayıları kolayca belirlenebilir. Bir ya da daha fazla kısmi korelasyon katsayısının 0.8 ya da 0.9 değerinden büyük olması, çoklu bağıntı sorununun olabileceğini gösterecektir fakat iki bağımsız değişken arasında yüksek bir ilişki olmaması çoklu bağıntı olmadığının ispatı değildir. Çoklu belirleme katsayısından hareketle elde edilen varyans büyütme faktörü de çoklu bağıntının göstergelerinden biridir. j’inci bağımsız değişkenin öteki k-1 bağımsız değişkenlerce belirleme katsayısı $R^2_j$ 1’e yakınsa j. değişkenin güçlü bir çoklu bağıntı içinde olduğu söylenebilir. Korelasyon matrisi tersinin köşegen elemanları Cjj ile gösterilmek üzere standartlaştırılmış ($X_s$) matrisi yardımıyla $C=( X_sX_s′ )^{-1}$ için
+
+$$R_j^2=1-C_{jj}^{-1}   ~~~ ,~~~     j=1,...,k$$
+
+yardımıyla kolayca bulunabilir. j’inci bir bağımsız değişken $X_j$, diğer değişkenlerle ilişkili değilse $R^2_J$ küçüktür ve $C_{jj}$ 1’e yakındır. Eğer Xj geriye kalan bağımsız değişkenlerle doğrusala yakın bir ilişki içindeyse $R^2 ≅1$’dir ve $C_jj$ de küçüktür. Çoklu doğrusal regresyonda j’inci regresyon katsayısının varyansı $C_{jj}σ^2$ olduğuna göre, bağımsız değişkenler arasındaki doğrusal bağımlılık yüzünden Cjj, b ̂_j ’nin varyansını artıran bir faktördür. Marquardt (1970) tarafından önerilen ve çoklu regresyon analizinde kullanılan varyans büyütme faktörü 
+
+$$VIF_j=C_j=(1-R^2_j)^-1$$
+
+ile belirlenir. Bir yada daha fazla varyans büyütme faktörü VIF ≥ 5 ya da VIF ≥ 10 ise çoklu bağıntı sorunu olduğu ifade edilir.
+
+
+# 5. UYGULAMALAR
+
+Yapılacak analizler  ülkelerin 2017 yılı mutluluk sıralamasına ilişkin verilerin analizleridir. Bu analizler Spss, R(ggplot2, easyggplot2, biotools ve  Ggally kütüphaneleri kullanılmıştır.) ve Python( pandas, numpy, matplotlib, seaborn, ve scipy kütüphaneleri kullanılmıştır.) ile yapılmıştır. Veri seti incelenmeye başlamadan önce uygulama boyunca kullanılacak olan verilerin isimlerinin Türkçe karşılığı kullanılmıştır. Veri setinde 126 tane gözlem bulunmaktadır.
+Kullanılan veri <https://www.kaggle.com/adwaywadekar/social-progress-and-happiness> adresi üzerinden alınmıştır.
+
+**Veri setinde 126 ülkeye ait 26 adet özellikten kullanılanlar; **
+
+•	Happiness score(Mutluluk puanı)
+
+•	Dystopia (Destopya/Anti-Ütopya)
+
+•	Freedom to make life choices(Seçim Yapma Özgürlüğü)
+
+•	Generosity(Cömertlik)
+
+•	Perceptions of corruption(Yolsuzluk Algısı)
+
+•	Social Support(Sosyal Destek)
+
+•	Personal Rights(Kişsel Haklar)
+
+•	Personal Freedom(Kişisel Özgürlük)
+
+Personal Freedom(Kişisel Özgürlük) değişkeni analizlerde kullanılmak üzere kategorize edilmiştir.
+
+**Bu kategoriler;**
+
+•	55’ten küçük olanlara özgür değil
+
+•	55 ile 70 arasında olanlara yarı özgür
+
+•	70’ten büyük olanlar özgür denilmiştir.
+
+Değişkenlerin dummy değişken gösterimi
+
+Değer      |Dummy1|Dummy2
+-----------|------|-----
+Özgür Değil|0     |0
+Yarı Özgür |1     |0
+Özgür      |0     |1
+
+Ödevde yapılan tüm testeler %95 güven düzeyi ile ölçülmüştür. Tüm p değerleri için 0.05 ile karşılaştırılıp karar verilmiştir. 
+
+Dünya Mutluluk Raporu, 126 ülkeyi vatandaşlarının kendilerini ne kadar mutlu algıladıklarına göre sıralayan küresel mutluluk durumunun önemli bir araştırmasıdır. 2017 yılının Dünya Mutluluk Raporu mutluluk ve topluma odaklanıyor: bu değişiklikleri yönlendiren teknolojilere, sosyal normlara, çatışmalara ve hükümet politikalarına odaklanarak mutluluğun 2017 yılında nasıl geliştiğini gösterir. 
+Dünya mutluluk Raporu, insanları neyin mutlu ettiğini daha iyi anlamak isteyen politika yapıcılar için vazgeçilmez bir araç olduğu kanıtlanmıştır. Zaman ve tekrar refahın nedenlerinin iyi sosyal destek ağları, sosyal güven, dürüst hükümetler, güvenli ortamlar ve sağlıklı yaşamlar olduğu görülür. Mutlu bir sosyal çevre, insanların aidiyet duygusu hissettikleri, birbirlerine ve ortak Kurumlarına güvendikleri bir ortamdır. Ayrıca daha fazla esneklik vardır, çünkü paylaşılan güven zorlukların yükünü azaltır ve böylece refahın eşitsizliğini azaltır. Mutluluk eşitsizliği ortalama yaşam değerlendirmelerini önemli ölçüde azaltır. Bu, insanların yaşam kalitesinde aşırı eşitsizlik olmadan toplumlarda yaşamaktan daha mutlu oldukları anlamına gelir.
+Bu diploma çalışmasında 2017 yılına ait dünya mutluluk raporu veri setine veri analizi ve doğrusal regresyon modellerini kullanarak hangi değişkenlerin daha iyi sonuç verdiğinin incelemesine yer verilmiştir.
+
+**Destopya nedir?**
+
+Destopya, dünyanın en az mutlu insanına sahip hayali bir ülkedir. Destopya kurmanın amacı, altı temel değişkenin her biri açısından tüm ülkelerin olumlu olarak karşılaştırılabileceği (hiçbir ülke Destopya'dan daha kötü performans göstermeyecek) bir ölçüt oluşturmaktır, böylece her alt çubuğun pozitif (veya sıfır, sıfırın altı durumda)  olmasına izin vermek. Dünyanın en düşük gelirine, en düşük yaşam beklentisine, en düşük cömertliğe, en çok yolsuzluğa, en az özgürlüğe ve en az sosyal desteğe sahip bir ülkede yaşam çok tatsız olacağı için, Ütopya'nın aksine “Destopya” olarak adlandırılmaktadır.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,message =F)
+```
+
+```{r happy, echo=F}
+library(haven)
+library(tidyr)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(easyGgplot2)
+library(GGally)
+library(mvnormtest)
+library(fBasics)
+library(car)
+library(zoo)
+library(lmtest)
+happy <- read.csv("C:/Users/Ozgur/Desktop/Tez/mutluluk.csv")
+ln_happy <- read.csv("C:/Users/Ozgur/Desktop/Tez/Ln-mutluluk.csv")
+attach(happy)
+```
+
+```{r}
+as_tibble(happy)
+```
+Verilerin tam hali
+```{r}
+glimpse(happy)
+```
+
+
+
+## 5.1. Büyük Veri Kümelerinde Veri Analizi
+
+Yapılan birçok araştırmada, toplanan verilerde eksikler ile karşılaşılır. Bu eksik değerler(kayıp gözlemler) istatistiksel analizlerde araştırmacıların karşılaştığı önemli sorunlardan birisidir. Veri seti incelendiğinde kayıp gözlem bulunmadığı için ek işlem yapılmasına gerek yoktur.Bu yüzden veri seti hakkında bilgi sahibi olmak için belirleyici istatistikler ve grafikler kullanılacaktır.
+
+### 5.1.1.Belirleyici istatistikler
+
+Veriler düzenlendikten sonra, veri kümesindeki değişkenlerin özellikleri değişkenin özetleyici ölçülerinin incelenmesi ile ortaya çıkar
+
+```{r}
+summary(happy)
+```
+
+MMutluluk puanının ortalaması 5,40 standart sapması 1,12’dir. Görüldüğü üzere standart sapması küçüktür. Bu da değişkenin homojen bir dağılma sahip olduğu ve değerler arası farkın yüksek olmadığı söylenebilir. Seçim yapma özgürlüğü, cömertlik, destopyanın standart sapması küçüktür. Bu değişkenin homojen bir dağılma sahip olduğu ve değerler arası farkın yüksek olmadığı söylenebilir. Diğer değişkenlerin standart sapması yüksektir. Bu da değişkenin heterojen bir dağılma    sahip olduğu ve değerler arası farkın yüksek olduğu söylenebilir.
+Mutluluk puanının ortalaması medyanı ve %5 kesilmiş ortalaması aynıdır. Bu değerlerin aynı olması aykırı değerin az olduğu şeklinde yorumlanabilir. Kişisel haklar değişkeninin MAD  (Ortalamadan Mutlak Sapma) değerleri çok yüksektir. Aykırı değer ya da  uç değerin olduğu söylenebilir.
+
+## 5.1.2. İlişki Ölçüleri
+
+Pearson Korelasyon Katsayısı 
+Veri setindeki değişkenlerin aralarındaki ilişkinin incelenmesi çok önemlidir.Bu sayede aralarında yüksek ilişki olan değişkenler regresyon modeline alınmayacak. Eğer alınsaydı çoklu bağıntı problemi meydana gelecekti. Analizde pearson korelasyon katsayısı ile değişkenlerin ilişkileri test edilecek ve 0,75’ten büyük değerler yüksek ilişkili kabul edildiği için çalışmaya alınmamıştır.
+
+```{r, echo=F}
+ggpairs(happy[2:7])
+```
+
+Değişkenleri genel olarak inceleyince tüm değişkenler arasında çok yüksek korelasyon olmadığı gözlemlenmiştir. Ancak; mutluluk skoru ve sosyal destek arasında pozitif korelasyonun var olduğu görülmektedir. Bu elde edilen ikili ilişkiler regresyon analizi için de daha sonra dikkate alınıp regresyon modeli oluşturulacaktır.
+
+## 5.1.3. Grafikler
+
+### 5.1.3.1. Mutluluk Skoru
+
+```{r, echo=F}
+#Happiness.score
+dot0=ggplot(data=happy, aes(x=Happiness.score))+ geom_dotplot(aes(fill="green"))+
+  labs(title = "Nokta Grafiği",x="Mutluluk Skoru ",y="")+ theme(legend.position = "none")
+box0=ggplot(data= happy)+geom_boxplot(mapping = aes(x=PersonalFreedomandChoice,y=Happiness.score,fill=PersonalFreedomandChoice))+
+  labs(title = "Kutu Grafiği",y=" ",x="Kişisel Özgürlük")+ theme(legend.position = "none")
+hist0=ggplot(data=happy, aes(Happiness.score)) + geom_histogram(aes(y =..density..),color="Black", fill="Blue") + geom_density(size=1)+
+  labs(title = "Histogram Grafiği",x="Mutluluk Skoru ",y="")
+qq0=ggplot(data=happy, aes(sample=Happiness.score))+ stat_qq(aes(color="Red"))+ stat_qq_line(color="black")+
+  labs(title = "Q-Q Grafiği",x="Mutluluk Skoru ",y="")+ theme(legend.position = "none")
+
+easyGgplot2::ggplot2.multiplot(dot0,hist0,box0,qq0)
+
+```
+
+Histogram ve nokta grafiğine bakıldığı zaman değişkende çarpıklığın az olduğu görülmektedir. Q-Q grafiğinde çizilen doğrusal çizginin üzerindeki noktalar, değişkenin teorik olarak normal dağılıma yakınsadığını gösterir.
+Mutluluk skoru değişkeninin nokta ve histogram grafiğine bakıldığında çarpıklık olmadığı gözükür. Uç değerlerin olmadığı gözükür. Kutu grafiğine bakıldığı zaman kişisel özgürlük bakımından kendini özgür hisseden ülkelerin mutluluk skorunun modu daha yüksek iken özgür hissetmeyen ülkelerin mutluluk skorundan daha düşük olur. Histogram ve nokta grafiğindeki uç değerlerin gözükmemesi ve parçalanmış kutu grafiğinde gözükmemesi uç değerlerin olmadığını gösterir. 
+
+### 5.1.3.2. Destopya
+```{r, echo=F}
+dot7=ggplot(data=happy, aes(x=Dystopia))+ geom_dotplot(aes(fill="green"))+
+  labs(title = "Nokta Grafiği",x="Destopiya(Anti-Ütopya)",y="")+ theme(legend.position = "none")
+box7=ggplot(data= happy)+geom_boxplot(mapping = aes(x=PersonalFreedomandChoice,y=Dystopia,fill=PersonalFreedomandChoice))+
+  labs(title = "Kutu Grafiği",y="Destopiya(Anti-Ütopya) ",x="Kişisel Özgürlük")+ theme(legend.position = "none")
+hist7=ggplot(data=happy, aes(Dystopia)) + geom_histogram(aes(y =..density..),color="Black", fill="Blue") + geom_density(size=1)+
+  labs(title = "Histogram Grafiği",x="Destopiya(Anti-Ütopya) ",y="")
+qq7=ggplot(data=happy, aes(sample=Dystopia))+ stat_qq(aes(color="Red"))+ stat_qq_line(color="black")+
+  labs(title = "Q-Q Grafiği",x="Destopiya(Anti-Ütopya) ",y="")+ theme(legend.position = "none")
+point7=ggplot(data=happy,aes(x=Dystopia, y=Happiness.score)) + geom_point(color="Purple")+ geom_smooth(method = "lm")+
+  labs(title = "Saçılım Grafiği",x="Destopiya(Anti-Ütopya) ",y="")
+
+easyGgplot2::ggplot2.multiplot(dot7,hist7,box7,qq7,point7)
+```
+
+Destopya değişkeninin nokta ve histogram grafiğine bakıldığında çarpıklıktan tam söz edilemez. Uç değerlerinin olduğu gözükür. Kutu grafiğine bakıldığı zaman kişisel özgürlük bakımından kendini özgür hisseden ülkelerin destopya modu ile diğer ülkelerin modu birbirine yakındır. Parçalanmış kutu grafiğinde uç değerlerin histogram ve nokta grafiğinde gözükenden daha fazla olduğu ortaya çıkar.       Q-Q grafiğinde değişkenin normallik varsayımını sağlamadığı gözükür. Saçılım grafiği ise, mutluluk puanı ile arasındaki ilişkinin doğrusal ilişkiye yakın olduğu gözükür. Doğrudaki değerlerin topladığı yerdeki gölgelerin küçüklüğü standart sapmanın az olduğunu gösterir.
+
+### 5.1.3.3. Seçim Yapma Özgürlüğü
+```{r, echo=F}
+dot1=ggplot(data=happy, aes(x=Freedom.to.make.life.choices))+ geom_dotplot(aes(fill="green"))+
+  labs(title = "Nokta Grafiği",x="Seçim Yapma Özgürlüğü",y="")+ theme(legend.position = "none")
+box1=ggplot(data= happy)+geom_boxplot(mapping = aes(x=PersonalFreedomandChoice,y=Freedom.to.make.life.choices,fill=PersonalFreedomandChoice))+
+  labs(title = "Kutu Grafiği",y="Seçim Yapma Özgürlüğü ",x="Kişisel Özgürlük")+ theme(legend.position = "none")
+hist1=ggplot(data=happy, aes(Freedom.to.make.life.choices)) + geom_histogram(aes(y =..density..),color="Black", fill="Blue") + geom_density(size=1)+
+  labs(title = "Histogram Grafiği",x="Seçim Yapma Özgürlüğü",y="")
+qq1=ggplot(data=happy, aes(sample=Freedom.to.make.life.choices))+ stat_qq(aes(color="Red"))+ stat_qq_line(color="black")+
+  labs(title = "Q-Q Grafiği",x="Seçim Yapma Özgürlüğü",y="")+ theme(legend.position = "none")
+point1=ggplot(data=happy,aes(x=Freedom.to.make.life.choices, y=Happiness.score)) + geom_point(color="Purple")+ geom_smooth(method = "lm")+
+  labs(title = "Saçılım Grafiği",x="Seçim Yapma Özgürlüğü",y="")
+
+easyGgplot2::ggplot2.multiplot(dot1,hist1,box1,qq1,point1)
+
+```
+
+Seçim yapma özgürlüğü değişkeninin nokta ve histogram grafiğine bakıldığında sola çarpık olduğu gözükür. Uç değerlerinin olduğu gözükür. Kutu grafiğine bakıldığı zaman kişisel özgürlük bakımından kendini özgür hisseden ülkelerin seçim yapma özgürlüğünün modu ile diğer ülkelerin modu birbirine yakındır. Yani ülkelerdeki seçim yapma özgürlüğü seviyeleri birbirine yakındır. Histogram ve nokta grafiğindeki uç değerin parçalanmış kutu grafiğinde gözükmemesi uç değerlerin olmadığını gösterir. Q-Q çizimlerinde ise, normallik varsayımından uzak olmadığı gözlenir, değişende çarpıklık gözlenir. Saçılım grafiği ise, mutluluk puanı ile arasındaki ilişkinin doğrusal ilişkiye yakın olduğu gözükür. Doğrudaki değerlerin topladığı yerdeki gölgelerin küçüklüğü standart sapmanın az olduğunu gösterir.
+
+### 5.1.3.4. Cömertlik
+```{r, echo=F}
+dot2=ggplot(data=happy, aes(x=Generosity))+ geom_dotplot(aes(fill="green"))+
+  labs(title = "Nokta Grafiği",x="Cömertlik",y="")+ theme(legend.position = "none")
+box2=ggplot(data= happy)+geom_boxplot(mapping = aes(x=PersonalFreedomandChoice,y=Generosity,fill=PersonalFreedomandChoice))+
+  labs(title = "Kutu Grafiği",y="Cömertlik",x="Kişisel Özgürlük")+ theme(legend.position = "none")
+hist2=ggplot(data=happy, aes(Generosity)) + geom_histogram(aes(y =..density..),color="Black", fill="Blue") + geom_density(size=1)+
+  labs(title = "Histogram Grafiği",x="Cömertlik",y="")
+qq2=ggplot(data=happy, aes(sample=Generosity))+ stat_qq(aes(color="Red"))+ stat_qq_line(color="black")+
+  labs(title = "Q-Q Grafiği",x="Cömertlik",y="")+ theme(legend.position = "none")
+point2=ggplot(data=happy,aes(x=Generosity, y=Happiness.score)) + geom_point(color="Purple")+ geom_smooth(method = "lm")+
+  labs(title = "Saçılım Grafiği",x="Cömertlik",y="")
+
+easyGgplot2::ggplot2.multiplot(dot2,hist2,box2,qq2,point2)
+
+```
+
+Cömertlik değişkeninin nokta ve histogram grafiğine bakıldığında sağa çarpık olduğu gözükür. Uç değerlerinin olduğu gözükür. Kutu grafiğine bakıldığı zaman kişisel özgürlük bakımından kendini özgür hisseden ülkelerin cömertlik modu ile diğer ülkelerin modu birbirine yakındır. Yani ülkelerdeki cömertlik seviyesi aynı ve düşüktür. Parçalanmış kutu grafiğinde uç değerlerin histogram ve nokta grafiğinde gözükenden daha fazla olduğu gözükür. Q-Q çizimlerinde ise, normallik varsayımını sağlamadığı gözlenir değişkende çarpıklık gözlenir. Saçılım grafiği ise, mutluluk puanı ile arasındaki ilişkinin doğrusal ilişkiye yakın olduğu gözükür. Doğrudaki değerlerin topladığı yerdeki gölgelerin küçüklüğü standart sapmanın az olduğunu gösterir.
+
+### 5.1.3.5. Sosyal Destek
+```{r, echo=F}
+
+dot10=ggplot(data=happy, aes(x=Social.support))+ geom_dotplot(aes(fill="green"))+
+  labs(title = "Nokta Grafiği",x="Sosyal Destek",y="")+ theme(legend.position = "none")
+boy0=ggplot(data= happy)+geom_boxplot(mapping = aes(x=PersonalFreedomandChoice,y=Social.support,fill=PersonalFreedomandChoice))+
+  labs(title = "Kutu Grafiği",y="Sosyal Destek",x="Kişisel özgürlük")+ theme(legend.position = "none")
+hist10=ggplot(data=happy, aes(Social.support)) + geom_histogram(aes(y =..density..),color="Black", fill="Blue") + geom_density(size=1)+
+  labs(title = "Histogram Grafiği",x="Sosyal Destek",y="")
+qq10=ggplot(data=happy, aes(sample=Social.support))+ stat_qq(aes(color="Red"))+ stat_qq_line(color="black")+
+  labs(title = "Q-Q Grafiği",x="Sosyal Destek",y="")+ theme(legend.position = "none")
+point10=ggplot(data=happy,aes(y=Social.support, x=Happiness.score)) + geom_point(color="Purple")+ geom_smooth(method = "lm")+
+  labs(title = "Saçılım Grafiği",y="Sosyal Destek",x="Mutluluk Skoru")
+
+easyGgplot2::ggplot2.multiplot(dot10,hist10,boy0,qq10,point10)
+```
+
+Sosyal destek değişkeninin nokta ve histogram grafiğine bakıldığında sola çarpık olduğu gözükür. Uç değerlerin olduğu gözükür. Kutu grafiğine bakıldığı zaman kişisel özgürlük bakımından ülkelerin sosyal destek seviyeleri birbirine yakındır. Histogram ve nokta grafiğindeki uç değerler parçalanmış kutu grafiğinde gözükür. Q-Q çizimlerinde ise normallik varsayımını sağlamadığı ve değişkenin çarpıklığının fazla olduğu gözükür. Saçılım grafiği ise, mutluluk puanı ile arasındaki ilişkinin doğrusal ilişkiye yakın olduğu gözükür. Doğrudaki değerlerin topladığı yerdeki gölgelerin büyüklüğü standart sapmanın yüksek olduğunu gösterir.
+
+### 5.1.3.6. Kişisel Haklar
+```{r, echo=F}
+dot14=ggplot(data=happy, aes(x=Personal.Rights))+ geom_dotplot(aes(fill="green"))+
+  labs(title = "Nokta Grafiği",x="Kişisel Haklar ",y="")+ theme(legend.position = "none")
+box14=ggplot(data= happy)+geom_boxplot(mapping = aes(x=PersonalFreedomandChoice,y=Personal.Rights,fill=PersonalFreedomandChoice))+
+  labs(title = "Kutu Grafiği",y="Kişisel Haklar ",x="Kişisel Özgürlük")+ theme(legend.position = "none")
+hist14=ggplot(data=happy, aes(Personal.Rights)) + geom_histogram(aes(y =..density..),color="Black", fill="Blue") + geom_density(size=1)+
+  labs(title = "Histogram Grafiği",x="Kişisel Haklar ",y="")
+qq14=ggplot(data=happy, aes(sample=Personal.Rights))+ stat_qq(aes(color="Red"))+ stat_qq_line(color="black")+
+  labs(title = "Q-Q Grafiği",x="Kişisel Haklar ",y="")+ theme(legend.position = "none")
+point14=ggplot(data=happy,aes(x=Personal.Rights, y=Happiness.score)) + geom_point(color="Purple")+ geom_smooth(method = "lm")+
+  labs(title = "Saçılım Grafiği",x="Kişisel Haklar ",y="")
+
+easyGgplot2::ggplot2.multiplot(dot14,hist14,box14,qq14,point14)
+```
+
+Kişisel haklar değişkeninin nokta ve histogram grafiğine bakıldığında sola çarpık olduğu ve uç değerlerin olduğu gözükür. Kutu grafiğine bakıldığı zaman kişisel özgürlük bakımından kendini özgür hisseden ülkelerin kişisel haklarının modu daha yüksek iken özgür hissetmeyen ülkelerin kişisel hakları daha düşük olur. Yani kendini özgür hisseden ülkelerde kişisel hakları daha fazladır. Histogram ve nokta grafiğindeki uç değerlerin daha fazla olduğu parçalanmış kutu grafiğinde gözükür. Q-Q çizimlerinde ise normallik varsayımını sağlamadığı ve değişenin çarpıklığının az olduğu gözükür. Saçılım grafiği ise, mutluluk puanı ile arasındaki ilişkinin doğrusal ilişkiye yakın olmadığı gözükür. Doğrudaki değerlerin topladığı yerdeki gölgelerin gölgelerin büyüklüğü standart sapmanın yüksek olduğunu gösterir.
+
+### 5.1.3.7. Kişisel Özgürlük
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/pie.png)
+
+
+Şekil 4.1’de pasta grafiği ülkelerdeki insanların kendilerini özgürlük dağılımın göstermektedir. Yani ülkelerin %19’u kendini özgür hisstemiyor, %50’si yarı özgür görüyor, %31’i kendinin özgür görüyor.
+
+## 5.2.Normal Dağılım
+
+### 5.2.1. Normallik İncelemesi
+
+	Veri setindeki değişkenlerin normallik incelemesini yapmak için Shapiro-Wilk test istatistiği kullanılmıştır. Gözlem sayısı 5000’den küçük olan veri setleri için uygundur. Teste ait hipotezler aşağıdaki şekildedir.
+	
+$H_0$:Değişkenlerin dağılımı normal dağılımdan gelmektedir.
+
+$H_A$:Değişkenler dağılımı normal dağılımdan gelmemektedir.
+
+
+```{r}
+shapiro.test(Happiness.score)
+shapiro.test(Dystopia)
+shapiro.test(Freedom.to.make.life.choices)
+shapiro.test(Generosity)
+shapiro.test(Social.support)
+shapiro.test(Personal.Rights)
+```
+
+**Normallik incelemesi %95 güven düzeyi ile yapılmıştır.** Shapiro-Wilk testi yapıldıktan sonra mutluluk skoru, destopya, seçim yapma özgürlüğü, cömertlik, sosyal destek ve kişisel haklar değişkenlerinin p değerleri 0,05’ten küçük olduğu için $H_0$ hipotezi reddedilir. Yani %95 güven ile değişkenlerin dağılımım normal dağılımdan gelmemektedir. Yani %95 güven ile değişkenlerin dağılımı normal dağılımdan gelmemektedir. 
+
+Dönüşüm yapılabilmesi için destopya, seçim yapma özgürlüğü ve cömertlik değişkenlerinde 0 değerlerinin bulunduğu gözlemlerin yerine dönüşümün  anlamsız olmaması için 0,01. Çevre kalitesi değişkeni normal dağıldığı için dönüşüm yapılmamıştır.
+	
+```{r}
+shapiro.test(ln_happy$Happiness.score)
+shapiro.test(ln_happy$Dystopia)
+shapiro.test(ln_happy$Freedom.to.make.life.choices)
+shapiro.test(ln_happy$Generosity)
+shapiro.test(ln_happy$Social.support)
+shapiro.test(ln_happy$Personal.Rights)
+```
+
+Dönüşüm yapıldıktan sonraki Shapiro-Wilk testi sonuçlarına göre mutluluk skoru, destopya, seçim yapma özgürlüğü, cömertlik sosyal destek, kişisel haklar değişkenleri %95 güven ile bu değişkenler normal dağılıma uymamaktadır. 
+
+**Merkezi Limit Teoremine göre örneklem sayısı 126 olduğu için normal dağıldığı varsayılmıştır.**
+
+### 5.2.2. Çarpıklık Ve Basıklık
+
+Değişkenler            |	Çarpıklık(α_3)|	Basıklık(α_4)
+-----------------------|----------------|--------------
+Mutluluk puanı         |	 0,128        |	-0,881
+Seçim yapma özgürlüğü  |	 0,550        |	-0,074
+Cömertlik	             | 1,038          |	 2,219
+Yolsuzluk algısı       |	 2,493        |	 1,761
+Destopya               |	-0,312        |	 0,729
+Temel insani ihtiyaçlar|	-0,703        |	-0,637
+Sağlık                 | -0,600         |	-0,084
+Çevre kalitesi         |	-0,123        |	-0,404
+Kişisel haklar         |	-0,285        |	-0,845
+Hoşgörü                |	 0,383        |	-0,283
+
+
+Veri setindeki değişkenler genellikle basıktır. Mutluluk puanı değişkeninin çarpıklığı azdır ve sağa çarpıktır. Cömertlik değişkeninin çarpıklığı yüksektir ve sağa çarpıktır. Destopya ve kişisel haklar değişkeninin çarpıklığı az ve sola doğrudur. Seçim yapma özgürlüğü ve sosyal destek değişkenlerinin çarpıklığı orta şiddettedir ve sola doğrudur. Cömertlik değişkeni aşırı sivridir. Destopya değişkenleri sivri bir dağılıma sahiptir. Mutluluk puanı ve kişisel haklar değişkenleri basık bir dağılıma sahiptir.
+
+## 5.3.Varyans Analizi
+
+### 5.3.1. Tek Yönlü Varyans Analizi(One-Way Anova)
+
+Çalışmanın bu kısmında ülkelerin özgürlük seviyelerinin ortalama mutluluk puanlarının üzerinde etkili olup olmadığını araştıracağız.
+
+Kişisel Özgürlük| N |Ortalama Rank
+----------------| - |-------------
+Özgür Değil     |35 |51,41
+Yarı Özgür      |51 |57,41
+Özgür           |39 |82,31
+Total           |126|
+
+126 ülkenin 36’sı kendinin özgür değil, 51’i yarı özgür ve 39’unun vatandaşları kendinin özgür görüyor. Ortalama rankın en küçük olduğu grup mutluluk skorunun daha düşük olduğu anlamına gelir. Yani kendini özgür hisseden ülkelerin mutluluk skoru daha yüksektir. Kendinin özgür hissetmeyen ülkelerin ise  mutluluk skoru daha düşüktür.
+
+```{r}
+kruskal.test(Happiness.score ~ PersonalFreedomandChoice, data = happy)
+```
+
+$H_0$: Özgürlük seviyelerinin ortalama mutluluk puanı eşittir.
+
+$H_A$: Özgürlük seviyelerinin ortalama mutluluk puanı ile arasında farklılık vardır.
+
+Sig.=0,00 değeri 0,05’ten küçük olduğu için $H_0$ reddedilir. Yani %95 güven ile özgürlük seviyeleri arası ortalama mutluluk puanı ile arasında farklılık vardır. 
+
+Ülkelerin özgürlük seviyelerinin mutluluk puanı üzerindeki etkisinin olup olmadığını araştırılmıştır.
+
+```{r}
+leveneTest(Happiness.score ~ PersonalFreedomandChoice, data = happy)
+```
+
+$H_0$: Grupların (Ülkelerin özgürlük düzeylerinin) varyansları homojendir.
+
+$H_A$: Grupların (Ülkelerin özgürlük düzeylerinin) varyansları homojen değildir.
+
+Burada p test istatistiği 0,349 >0,05 olduğu için $H_0$ hipotezi reddedilmez. Yani %95 güven ile grupların varyansları homojen dağılmaktadır.
+
+```{r}
+res.aov <- aov(Happiness.score ~ PersonalFreedomandChoice, data = happy)
+summary(res.aov)
+```
+
+$H_0$: Grupların ortalamaları arasında anlamlı farklılık yoktur.
+
+$H_A$: Grupların ortalamaları arasında anlamlı farklılık vardır.
+
+Anova tablosu p istatistiği 0,00<0,05 olduğu için $H_0$ hipotezi reddedilir. Yani %95 güven ile ortalama mutluluk puanı  ülkelerin özgürlük düzeyi ile istatistiksel olarak anlamları bir farklılık gösterir.
+
+```{r}
+TukeyHSD(res.aov)
+```
+
+Grupların varyansları eşit olduğu için Tukey testi istatistikleri yazılmıştır.
+
+$H_0$: İki Grup ortalaması arasında anlamlı bir farklılık yoktur.0
+
+$H_A$: İki Grup ortalaması arasında anlamlı bir farklılık vardır.
+
+Özgür ile yarı özgür gruplarının p değeri 0,05’ten küçük olduğu için $H_0$ reddedilir. Yani %95 güven ile özgür ile yarı özgür gruplarının ortalaması arasında fark vardır. Özgür ile özgür değil gruplarının p değeri 0,05’ten küçük olduğu için gruplarının ortalaması arasında fark vardır. Yarı özgür ile özgür değil gruplarının p değeri 0,05’ten büyük olduğu için gruplarının ortalaması arasında fark yoktur.
+
+## 5.4. Regresyon
+
+### 5.4.1. Çoklu Doğrusal Regresyon
+
+Regresyon uygulanması için kategorik değişkenlerin yerine dummy değişkeler oluşturulmuştur. Regresyona alınacak değişkenler seçim yapma özgürlüğü, cömertlik, yolsuzluk algısı, destopya, temel insani ihtiyaçlar, sağlık, çevre kalitesi, kişisel haklar, hoşgörü ve özgürlük değişkenine ait dummy değişkenler kullanılmıştır. Modelde veri setinin logaritmik dönüşümü yapılmış haliyle oluşturulmuştur.
+
+#### 5.4.1.1. En Küçük kareler Kestiricisi
+
+```{r}
+happy.model=lm(Happiness.score~., data=ln_happy)
+happy.model
+```
+
+Regresyon katsayılarına ilişkin sonuçlar incelendiğinde β parametrelerinin tahmini B sütunundadır. Bu değerler ile regresyon modeli aşağıdaki gibi olur.
+
+$$Mutluluk Skoru=0,287 + 0,536*X_{i1}  + 0,390*X_{i2}  + 0,065*X_{i3}  + 0,487*X_{i4}  + 0,001*X_{i5}$$ 
+
+$$+ 0,006*X_{i8}  -0,050*X_{i9}  + 0,003Ozgur_{i1}  + 0,035Ozgur_{i2}+ε_i$$
+
+#### 5.4.1.2. Belirtme Katsayısı Ve Kısmi F Testi
+
+```{r}
+summary(happy.model)
+```
+
+**Belirtme Katsayısı**
+
+Yukarıdaki tabloda görüldüğü mutluluk skoru verilerinin basit regresyon modeli için belirtme katsayısı ($R^2$) 0,8553 olarak elde edilmiştir. Bağımlı değişkendeki değişimin %85,53’ünü bağımsız değişken tarafından açıklanmıştır. Modele ait düzeltilmiş $R^2$ ise %84,93’dır.
+
+**Kısmi F Testi**
+
+$H_0$:Bağımsız değişkenlerin kurulan modele anlamlı bir katkısı yoktur.
+$H_A$: Bağımsız değişkenlerin kurulan modele anlamlı bir katkısı vardır.
+Anova tablosundaki F istatistiğinin p değeri 0,05’ten küçük olduğu için $H_0$ hipotezi reddedilir. Yani %95 güven ile kurulan model anlamlıdır.
+
+#### 5.4.1.3. Artık İncelemesi
+
+**1.Sabit varyanslılık**
+
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/artik1.png)
+
+Grafikte artıkların doğrusal olmayan herhangi bir kalıpta olmadığını gösterir. Artıkların saçılım grafiği incelendiğinde çizilen doğrunun düz çizgiye yakın olduğu görülür ve doğrudaki gölgeler sapmaların yüksek olduğunun gösterir yani artıkların standart sapması yüksektir. Değişen varyanslılık yoktur.
+
+**2.	Hataların Normal Dağılması**
+
+![](C:/Users/Ozgur/Desktop/Tez/Formul/qq-a.png)
+
+Q-Q çizmlerinde ise artıkların normal dağılımı yakın görülmektedir. Hatalar hafif sola çarpıktır.
+
+#### 5.4.1.4.Otokorelasyon
+
+```{r, echo=F}
+dwtest(happy.model)
+
+```
+
+$$H_0:P=0 (Ototkorelasyan yoktur.)$$
+
+$$H_A:P≠0 (Otokorelasyon vardır.) $$
+
+Buna göre Durbin-Watson test istatistiğinin hesaplanan değeri d = 1.7953 olarak elde edilmiştir. d=1.7953 değeri 2’ye yakın olduğu için otokorelasyon yoktur denilebilir.
+
+
+```{r}
+print(vif(happy.model))
+```
+
+$VIF_j$ değerlerini karşılaştırmak için 10 değeri baz alınmıştır. Değişkenlerin VIF değerleri 10’dan küçük olduğu için değişkenler arasında çoklu bağıntının olduğu değişken yoktur.
+
+# Kaynakça
+
+•	<https://tr.wikipedia.org/wiki/Normal_dağılım>
+
+•	<https://tr.wikipedia.org/wiki/Büyük_sayılar_yasası>
+
+• <http://blog.milliyet.com.tr/buyuk-sayilar-kanunu/Blog/?BlogNo=556306>
+
+•	<http://www.khanacademy.org.tr/video.asp?ID=3109>
+
+•	<http://yunus.hacettepe.edu.tr/~tonta/courses/fall2007/sb5002/sb5002-10-varyans-analizi.pdf>
+
+•	<http://eczacilik.anadolu.edu.tr/bolumSayfalari/belgeler/ecz2014%2011_20140527094539.pdf>
+
+•	<https://slideplayer.biz.tr/slide/2772651/>
+
+•	<https://tr.wikipedia.org/wiki/Otokorelasyon>
+
+•	<https://esatis.tubitak.gov.tr/ekitap.htm>
+
+•	<https://en.wikipedia.org/wiki/Q–Q_plot>
+
+•	<https://tr.wikipedia.org/wiki/Shapiro-Wilk_sınaması>
+
+•	<https://worldhappiness.report/ed/2017/>
+
+• <http://www.acarindex.com/dosyalar/makale/acarindex-1423937171.pdf>
+
+•	İstatistğe Giriş 2016-2017 Güz Dönemi Dres Notları (Doç. Dr. Ayça Ç. Pehlivanlı)
+
+•	Regresyon Analizi 2018-2019 Güz Dönemi Ders Notları (Prof. Dr. Aydın Erar)
+
+•	Çok Deşikenli İstatistiksel Yöntemler 2019-2020 Güz Dönemi Ders Notları (Prof. Dr. Gülay Başarır)
+
+•	Spss Uygulamalı Temel İstatistik Yöntemler 8. Baskı 
+(Prof. Dr. Özkan Ünver - Prof. Dr. Hamza Gamgam - Doç. Dr. Bülent Altunkaynak/Ocak 2016)
+
+•	Doğrusal Regresyon Analizine Giriş 5. başkıdan çeviri 
+(Douglas C. Montgoemery - Elizabeth A. Peck - G. Geoffrey Vining/2013)
+
