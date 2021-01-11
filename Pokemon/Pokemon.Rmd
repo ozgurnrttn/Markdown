@@ -1,0 +1,346 @@
+---
+title: "Pokemon"
+author: "Github: Ozgurnrttn"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: no
+    toc: yes
+    toc_float: yes
+    df_print: paged
+  html_notebook:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes---
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+KAYNAK : https://www.kaggle.com/alopez247/pokemon/downloads/pokemon.zip/2
+
+# 1. Veri Açıklaması:
+
+## 1.1. Pokemon Nedir?
+
+    Pokémon, kendi dünyasında yaşayan hayali hayvan benzeri canavarlardır. Pokémon
+    birbirleriyle kavga etmek gibi huyları vardır. Genellikle (insan) eğitmenlerinin emirlerine göre kavga ederler. 
+
+* Şimdi veri kümesinin 23 sütununu inceleyelim. 
+* İlk ikisi, Pokémon’un benzersiz tanımlayıcıları
+* 21 değişkeninden 12'si sayısal (10 sürekli ve 2 ayrık), 6 kategorik ve 3'dür.
+
+## 1.2. Değişken incelemesi:
+
+**Number :** Uniq değer
+
+**Name :** Uniq değer
+
+**Type-1 :** pokemonun fiziksel özelliği
+
+**Type-2 :** pokemonun yeteneği (boş değerler var)
+
+**Total :** Pokémon'un tüm temel savaş istatistiklerinin toplamı.
+        Kendisinden sonra gelen 6 değişkenin toplamı
+
+HP.
+
+Attack.
+
+Defense.
+
+Sp_Atk.
+
+Sp_Def.
+
+Speed.
+
+Bu altı değişken savaş istatistikleri ile ilgilidir. Biz Totali kullanacağız.
+
+**Generation :**Pokémon'un serbest bırakıldığı nesil. 
+             1 ile 6 arasında bir tam sayıdır,
+             sayısal ayrık değişken.
+             
+**isLegendary.:** Pokémon'un efsanevi olup olmadığını belirten Boolean.
+              Karşılaşılması ve yakalanması gerçekten zor.
+              
+**Color:** pokemon renkleri 10 gruptur.
+       Black, Blue, Brown, Green, Grey, Pink, Purple, Red, White, ve Yellow.
+
+**hasGender.:** booleandır. male or female. pokemonun cinsiyetini belirtir.
+
+**Pr_Male. :** pokemonun doğada erkek yada kadın olarak görülme olasılığı
+
+**Egg_Group_1. :** 15 gruptan oluşur. Yumurtanın özellikleridir. Amorf, Böcek, Aynen, Ejderha, Peri, Tarla, Uçan, Çimen, İnsan Gibi, Mineral, Canavar, Keşfedilmemiş,
+Su_1, Su_2 ve Su_3.
+
+**Egg_Group_2. :** Pokémon türlerinde olduğu gibi, Pokémon da iki yumurta grubuna ait olabilir. iki gruba ait ise ikinci grubu bu sütunda.
+
+**hasMegaEvolution.: ** Bir Pokémon'un mega evrimleşip evrimleşmeyeceğini gösteren Boolean.
+
+**Height_m. :** Sürekli değişken. Boy.
+
+**Weight_kg. :** Sürekli değişken. Ağırlık.
+
+**Catch_Rate. :** Yakalama oranı. 3 ile 255 arasında sınırlandırılmıştır. Sürekli.
+
+**Body_Style. :** Pokémon'un vücut stili. 14 vücut stili kategorisi belirlenmiştir
+
+
+## 1.3. Import Data
+
+```{r message=FALSE, warning=FALSE}
+library(readr)
+library(tidyverse)
+pokemon <- read_csv("C:/Users/oztur/OneDrive/Masaüstü/Calisma/pokemon_alopez247.csv")
+as_tibble(pokemon)
+```
+
+```{r}
+pokemon$isLegendary = as.factor(pokemon$isLegendary)
+glimpse(pokemon)
+```
+
+
+```{r}
+colnames(pokemon)
+```
+
+
+Data da 6 sürekli değişkenden hesaplanmış Total değişkeni Savaş gücü istatistiğini göstermektedir. Ben bu değişkeni kullanıp diğer değişkenleri datadan çıkartmak istiyorum.
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(magrittr)
+pokemon <- as.data.frame(pokemon)
+pokemon <- select(pokemon, -c("HP", "Attack", "Defense", "Sp_Atk", "Sp_Def", "Speed"))
+as_tibble(pokemon)
+```
+
+```{r message=FALSE, warning=FALSE}
+library(Amelia)
+missmap(pokemon, main = "Missing Observation", col = c("black", "purple"))
+```
+
+Yaptığımız bu analizde datadaki 3 değişkende boş gözlem değerleri olduğu görülmektedir.
+Bu değişkenleri de datamızdan çıkaralım.
+
+```{r message=FALSE, warning=FALSE}
+pokemon <- select(pokemon, -c("Egg_Group_2", "Type_2", "Pr_Male" ))
+as_tibble(pokemon)
+```
+
+```{r}
+summary(pokemon)
+```
+
+Kalan Değişkenlerimin özet istatistikleri yukarıdaki gibidir.
+
+```{r message=FALSE, warning=FALSE}
+attach(pokemon)
+Type_1 <- factor("Type_1")
+Color <- factor("Color")
+Egg_Group_1 <- factor("Egg_Group_1")
+Body_Style  <- factor("Body_Style")
+detach(pokemon)
+```
+ 
+## 1.4. Pokemonların Grafikleri
+
+```{r message=FALSE, warning=FALSE}
+par(mfrow=c(1,3))
+hist(pokemon$Height_m, col = rainbow(4:8))
+sunflowerplot(pokemon$Height_m, pch = "+", col = rainbow(30))
+boxplot(pokemon$Height_m)
+```
+
+```{r message=FALSE, warning=FALSE}
+par(mfrow=c(1,3))
+hist(pokemon$Weight_kg, col = rainbow(4:8))
+sunflowerplot(pokemon$Weight_kg, pch = "+", col = rainbow(30))
+boxplot(pokemon$Weight_kg)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+par(mfrow=c(1,3))
+hist(pokemon$Total, col = rainbow(4:8))
+sunflowerplot(pokemon$Total, pch = "+", col = rainbow(30))
+boxplot(pokemon$Total)
+```
+
+boy ve kilo ile ilgili değişkenlerim sağ çarpık dağılıyor. bunun sebebinin aykırı değerden kaynaklandığını ikinci grafikten gördüm.
+Güç değişkenimse histogram grafiğinden bakıldığında normal dağılmaktadır.
+
+# 2. Normallik Testi
+
+```{r}
+shapiro.test(x = pokemon$Total)
+```
+
+$H_0$ : Değişkenleri dağılımı ile Normal dağılım arasında fark yoktur.
+
+$H_A$ : Değişkenleri dağılımı ile Normal dağılım arasında fark vardır.
+
+test sonucuna baktığımızda p-value değeri 0.05 den küçük olduğu için $H_0$ hipotezi reddedilir.
+Normal Dağılmıyor.
+
+# 3. Regresyon Analizi
+
+## 3.1. En Küçük kareler Kestiricisi
+
+```{r}
+lm(pokemon$Total~pokemon$Height_m+pokemon$Weight_kg) %>% 
+  summary()
+```
+
+
+Yaptığımız regresyon analizinde sonuçlara baktığımız zaman **MODEL** aşağıdaki gibidir
+$$Y = 357.81 + 32.16Height(m) + 0.41Weight(kg)$$
+**Belirtme Katsayısı**
+
+Yukarıdaki tabloda görüldüğü mutluluk skoru verilerinin basit regresyon modeli için belirtme katsayısı ($R^2$) 0,8553 olarak elde edilmiştir. Bağımlı değişkendeki değişimin %85,53’ünü bağımsız değişken tarafından açıklanmıştır. Modele ait düzeltilmiş $R^2$ ise %33,82’dır.
+
+**Kısmi F Testi**
+
+$H_0$: Bağımsız değişkenlerin kurulan modele anlamlı bir katkısı yoktur.
+
+$H_A$: Bağımsız değişkenlerin kurulan modele anlamlı bir katkısı vardır.
+
+Anova tablosundaki F istatistiğinin p değeri 0,05’ten küçük olduğu için $H_0$ hipotezi reddedilir. Yani %95 güven ile kurulan model anlamlıdır.
+
+
+## 3.2. Regresyon Modelinin Geliştirilmesi
+
+```{r}
+lm(pokemon$Total~pokemon$Height_m+pokemon$Weight_kg+pokemon$hasGender) %>% 
+  summary()
+```
+
+cinsiyet değişkeni bu model için anlamlıdır.
+diğer değişkenler sabit tutulduğunda pokemonun kadın olması 83.7 kat güç istatistiğini düşürür.
+
+```{r}
+lm(pokemon$Total~pokemon$Height_m+pokemon$Weight_kg+pokemon$hasGender+pokemon$Color) %>% 
+  summary()
+```
+
+modele renk değişkeni eklendiğinde renk değişkeninin tüm gurupları için bağımlı değişkeni 
+açıklamakta anlamsız olduğunu görüyoruz.
+yani pokemonun renginin kazanma gücü istatistiğine etkisi yoktur.
+bu değişkeni çıkartıyorum
+
+```{r}
+lm(pokemon$Total~pokemon$Height_m+pokemon$Weight_kg+pokemon$hasGender+pokemon$Catch_Rate) %>% 
+  summary()
+```
+
+yakalanma oranını modele eklediğimizde anlamlı olduğunu görüyoruz
+modele bakarak diğer değişkenler sabit tutulduğunda 
+pokemonun yakalanma oranı bir birim yükseldiğinde kazanma gücü istatistiği 0.8 kat düşer.
+
+```{r}
+lm(pokemon$Total~pokemon$Height_m+pokemon$Weight_kg+pokemon$hasGender+pokemon$hasMegaEvolution) %>% 
+  summary()
+```
+
+modele bakarak diğer değişkenler sabit tutulduğunda 
+pokemon evrimleşebilir türde olduğunda kazanma gücü istatistiği 65.04 kat artar.
+
+## 3.3. Varyans Homojenliği
+
+```{r message=FALSE, warning=FALSE}
+library(car)
+leveneTest(pokemon$Total~pokemon$Color)
+```
+
+$H_0$: Grupların varyansları homojendir.
+
+$H_A$: Grupların varyansları homojen değildir.
+
+Burada p test istatistiği 0,984 >0,05 olduğu için $H_0$ hipotezi reddedilmez. Yani %95 güven ile grupların varyansları homojen dağılmaktadır
+
+# 4. Anova 
+```{r}
+oneway.test(pokemon$Total~pokemon$Color, var.equal = T)
+```
+
+$H_0$: Pokemonların renkleri arasında anlamlı bir fark yoktur.
+
+$H_A$: Pokemonların renkleri arasında anlamlı bir fark vardır.
+
+$H_0$ reddedilemez. renk grupları arasında savaş kazanma istatistiği bakımından bir fark yoktur.
+
+
+```{r warning=FALSE}
+leveneTest(pokemon$Total~pokemon$isLegendary)
+```
+
+$H_0$: Grupların varyansları homojendir.
+
+$H_A$: Grupların varyansları homojen değildir.
+
+Burada p test istatistiği 0,349 >0,05 olduğu için $H_0$ hipotezi reddedilmez. Yani %95 güven ile grupların varyansları homojen dağılmaktadır.
+
+```{r}
+pokemon.aov = aov(pokemon$Total~pokemon$isLegendary, data=pokemon)
+summary(pokemon.aov)
+```
+
+$H_0$: Pokemonun efsanevi olup olmadığını gösteren logical değişkenin iki grubu arasında anlamlı farklılık yoktur.
+
+$H_A$: Pokemonun efsanevi olup olmadığını gösteren logical değişkenin iki grubu arasında anlamlı farklılık vardır.
+
+Anova tablosu p istatistiği 0,00<0,05 olduğu için $H_0$ hipotezi reddedilir. Yani %95 güven ile ortalama mutluluk puanı  ülkelerin özgürlük düzeyi ile istatistiksel olarak anlamları bir farklılık gösterir.
+
+```{r}
+TukeyHSD(pokemon.aov)
+```
+
+Grupların varyansları eşit olduğu için Tukey testi istatistikleri yazılmıştır.
+
+$H_0$: İki Grup ortalaması arasında anlamlı bir farklılık yoktur.0
+
+$H_A$: İki Grup ortalaması arasında anlamlı bir farklılık vardır.
+
+Efsanevi ile efsanevi olmayan gruplarının p değeri 0,05’ten küçük olduğu için $H_0$ reddedilir. Yani %95 güven ile efsanevi ile efsanevi olmayan pokemonların ortalaması arasında fark vardır.
+
+
+# 5. Pokemon Karşılaştırması
+
+```{r}
+library(lattice)
+barchart(pokemon$Type_1, col = blues9)
+```
+Enfazla pokemon Su türündedir. Daha sonra normal türde vardır.
+
+```{r}
+rownames(pokemon) <- pokemon$Name
+View(pokemon)
+```
+
+```{r}
+table(as.character(pokemon$Type_1)) %>% 
+knitr::kable() 
+```
+ 
+```{r message=FALSE, warning=FALSE}
+library(grDevices)
+a <- filter(pokemon, (pokemon$Type_1 == "Electric")) 
+stars(a, key.loc = c(19, 2), draw.segments = TRUE, labels = a$Name)
+```
+
+```{r message=FALSE, warning=FALSE}
+a <- filter(pokemon, (pokemon$Type_1 == "Water")) 
+stars(a, key.loc = c(30, 2), draw.segments = TRUE, labels = a$Name)
+```
+
+```{r message=FALSE, warning=FALSE}
+a <- filter(pokemon, (pokemon$Type_1 == "Psychic")) 
+stars(a, key.loc = c(20, 2), draw.segments = TRUE, labels = a$Name)
+```
+
+```{r message=FALSE, warning=FALSE}
+a <- filter(pokemon, (pokemon$Type_1 == "Flying")) 
+stars(a, key.loc = c(20, 2), draw.segments = TRUE, labels = a$Name)
+```
