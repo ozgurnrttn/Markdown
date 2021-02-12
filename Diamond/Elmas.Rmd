@@ -211,6 +211,15 @@ ggplot(data=elmas)+geom_boxplot(mapping = aes(x=color, y=table, color=color))
 ### Histogram
 
 ```{r, echo=T}
+
+ggplot(diamonds,aes(x = cut, fill = cut)) + 
+  geom_bar()+
+  labs( x = "Elmasların kesim türü",
+        y = "Frekanslar",
+        title = "Kesimlerine göre elmas türleri")
+```
+
+```{r, echo=T}
 ggplot(data=elmas,aes(x=price))+geom_histogram(aes(y=..density..),color="Black", fill="Blue")+geom_density()
 ```
 
@@ -228,6 +237,7 @@ ggplot(data = diamonds) +
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
 ```
 
+### Pasta Grafiği
 ```{r, echo=T}
 
 ggplot(diamonds,aes(x = "", fill=clarity)) + 
@@ -245,15 +255,4 @@ ggplot(data = diamonds) +
   coord_flip()+ 
   coord_polar()
 
-```
-
-### Pasta Grafiği
-
-```{r, echo=T}
-
-ggplot(diamonds,aes(x = cut, fill = cut)) + 
-  geom_bar()+
-  labs( x = "Elmasların kesim türü",
-        y = "Frekanslar",
-        title = "Kesimlerine göre elmas türleri")
 ```
