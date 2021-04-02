@@ -1,0 +1,302 @@
+---
+title: "Kalp Krizi Verisi Üzerinde Tanımlayıcı İstatistikler ve Görselleştirme"
+author: "GitHub: Ozgurnrttn"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    df_print: paged
+  html_notebook:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning =F)
+```
+
+# Ugulama Kalp Krizi Veri Seti İle İlgili Uygulamalar
+Kalp Krizi veri seti veri seti uzerinde veri temizleme, veri duzenleme, gerekli gorulen fonksiyonlarin veri seti uzerinde kullanilmasi, tanimsal istatistikleri elde etme, gorsellestirme  uygulanmistir.
+
+Veri Seti kaggle uzerinden <https://www.kaggle.com/ronitf/heart-disease-uci> linki ile alinmistir.
+
+**Verini Tanımı**
+
+Değişken|Türkçe İsim|Bilgi
+--------|-----------|-----
+Age | Yaş| Scaler
+Sex | Cinsiyet| Nominal (0= Kadın, 1=Erkek)
+Cp | Göğüs Ağrısı Tipi| Ordinla (0= Tipik Anjina, 1=Atipik Anjina, 2=Non-Anginal Pain, 3=Asemptomatik)
+Trestbps | Kan Basıncı|Scaler
+Chol | Kolesterol|Scaler
+Fbs | Kan Şekeri| Scaler
+Restecg| Elektrokardiyografik Sonuçları  | Nominal
+Thalach | En Yüksek Kalp Atış Hızı | Scaler
+Exang |Anjina| Nominal (0=Yok, 1=Var)
+Oldpeak |Oldpeak| Scaler
+Slope| ST segmentinin Eğimi | Nominal
+Ca |Renklendilmiş Damar Sayısı| Scaler
+Thal Thal | Nominal
+Target|Hedef |Nominal
+
+
+```{r, massenge = FALSE, warning=FALSE}
+library("tidyr")
+library("tidyverse")
+library("dplyr")
+library("ggplot2")
+library("readr")
+library("rstatix")
+library("pastecs")
+library("readr")
+```
+
+```{r, massenge = FALSE, warning=FALSE}
+heart <- read_csv("C:/Users/oztur/OneDrive/Masaüstü/heart.csv")
+heart$cp<-factor(heart$cp,levels = c(0,1,2,3),labels=c("Tipik Anjina","Atipik Anjina","Non-Anginal Pain"," Asemptomatik"))
+heart$sex<-factor(heart$sex,levels = c(0,1),labels=c("Kadın","Erkek"))
+heart$exang<-factor(heart$exang,levels = c(0,1),labels=c("No","Yes"))
+```
+
+```{r}
+as_tibble(heart)
+```
+
+# Tanımsal İstatistikler
+
+```{r}
+pastecs::stat.desc(heart[,c(1,5:8,10,12)])
+```
+
+Degiskenlerin istatistikleri
+
+```{r }
+glimpse(heart)
+```
+
+# Normallik Testi
+
+```{r}
+heart %>%
+  dplyr::select(age, trestbps, chol, fbs, thalach, oldpeak) %>%
+  mshapiro_test()
+```
+
+$H_0$: Veri Seti Normal Dağılmamaktadır.
+
+$H_A$: Veri Seti Normal Dağılmaktadır.
+
+Bütün değişkenlerin sig. değeri 0,05’ten küçük olduğu için $H_0$ reddedilir.
+
+%95 Güven düzeyinde değişkenler normal dağılımdan gelmemektedir.
+
+```{r}
+as_tibble(is.na(heart))
+```
+
+Veride missing values yoktur.
+
+
+# Dplyr Fonksiyonu ile işlemler
+
+### Select
+
+Heart verisiden göğüs ağrısı tipi, kan basıncı, kan şekeri,  cp, trestbps, chol, fbs ve restecg değişkenlerini getir?
+
+```{r }
+select(heart,cp:restecg)
+```
+
+Heart verisiden göğüs ağrısı tipi, kan basıncı, kolesterol, kan şekeri ve elektrokardiyografik sonuçları değişkenleri dışındaki değişkenleri getir?
+
+```{r}
+select(heart,-(cp:restecg))
+```
+
+## Filter
+
+Sadece göğüs ağrısı tipi tipik anjina ve asemptomatik olanları getir.
+```{r }
+filter(heart, cp %in% c("Tipik Anjina","Asemptomatik"))
+```
+
+Kan basıncı 180'den az olanları ve kolesterolü 250'den fazla olanları getir getir.
+```{r }
+filter(heart, trestbps <180 & chol > 250)
+```
+
+## Arrange
+
+Heart verisini kan sekerine gore kucukten buyuge sırala?
+```{r }
+arrange(heart, fbs)
+```
+
+
+Heart verisinde yaş, kan basıncı,kolesterol ve oldpeak değişkenlerini oldpeak değişkenine göre küçükten büyüğe sırala?
+
+```{r}
+arrange(select(heart,age, trestbps, chol, oldpeak), oldpeak)
+```
+
+Heart verisinde yaş, kan basıncı,kolesterol ve oldpeak değişkenlerini oldpeak değişkenşne göre küçükten büyüğe sırala?
+
+```{r}
+arrange(select(heart,age, trestbps, chol, oldpeak), desc(oldpeak))
+```
+
+## Summarise
+
+Heart verisetinin gözlem sayısı, cinsiyet, göğüüs ağrısı tipi ve anjinanın kategori sayilarini ile ortalama yaş ve kan şekerinin ortalamasını bulununz
+
+```{r}
+summarise(heart,Gozlem_Sayisi=n(),
+          Sex_Destinasyonlari=n_distinct(sex),
+          Cp_Destinasyonlari= n_distinct(cp),
+          Exang_Destinasyonlari= n_distinct(exang),
+          Ortalama_age= mean(age, na.rm = T),
+          Ortalama_fbs= mean(fbs, na.rm = T))
+
+```
+
+## Pipe operatoru
+
+Kan basıncı ile en yüksek kalp atışı değişkenleri icin "kan basıncı\<en yüksek kalp atışı" kosulu altinda toplam en yüksek kalp atışını bulun
+
+```{r}
+heart %>% 
+  select(trestbps,thalach) %>% 
+  filter(trestbps< thalach) %>% 
+  summarise(Ortalama_Thalach= mean(thalach))
+```
+
+Toplam yaşı bulunuz?
+
+```{r}
+heart %>% select(age) %>% sum()
+```
+
+Kadınların olanların  yaşlarını bulunuz?
+
+```{r}
+as_tibble(heart %>% select(sex, age) %>% filter(sex=="Kadin"))
+```
+
+
+## Group By
+
+Göğüs ağrısı tipi değişkenini kategorilere gore dagilimi
+```{r}
+heart %>% group_by(cp) %>% summarise(Adet=n())
+```
+
+Cinsiyet degiskeninin kategorilere gore dagilimi
+
+```{r}
+heart %>% group_by(sex) %>% summarise(Adet=n())
+```
+
+Anjina degiskeninin kategorilere gore dagilimi
+
+```{r}
+heart %>% group_by(exang) %>% summarise(Adet=n())
+```
+
+Göğüs ağrısı tipi ve cinsiyet degiskenlerini ikili dagilimi
+
+```{r}
+heart %>% group_by(cp, sex) %>% summarise(Adet=n())
+```
+
+
+# Grafikler
+
+## Point plot
+
+```{r , echo=T}
+ggplot(data=heart)+ geom_point(mapping = aes(x=trestbps,y= oldpeak,color=sex))
+```
+
+```{r , echo=T}
+attach(heart)
+ggplot(data=heart)+ geom_point(mapping = aes(x=thalach,y=age,color=exang))
+```
+
+```{r, echo=T}
+ggplot(data=heart)+ geom_point(mapping = aes(x=thalach,y=oldpeak,color=cp))
+```
+
+## Bar Plot
+
+```{r, echo=T}
+ggplot(data=heart)+ geom_bar(mapping = aes(x=sex, fill=cp))
+```
+
+```{r, echo=T}
+ggplot(data=heart)+ geom_bar(mapping = aes(x=exang, fill=sex),position = "fill")
+```
+
+## Box Plot
+
+```{r, echo=T}
+ggplot(data=heart)+geom_boxplot(mapping = aes(x=sex, y=oldpeak, color=sex))
+```
+
+```{r, echo=T}
+ggplot(data=heart)+geom_boxplot(mapping = aes(x=cp, y=oldpeak, color=cp))
+```
+
+```{r, echo=T}
+ggplot(data=heart)+geom_boxplot(mapping = aes(x=exang, y=oldpeak, color=cp))
+```
+
+## Histogram
+
+```{r, echo=T}
+ggplot(data=heart,aes(x=trestbps))+geom_histogram(aes(y=..density..),color="Black", fill="Blue")+geom_density()
+```
+
+```{r, echo=T}
+ggplot(data=heart,aes(x=chol))+geom_histogram(aes(y=..density..),color="Black", fill="Red")+geom_density()
+```
+
+```{r, echo=T}
+ggplot(data=heart,aes(x=thalach))+geom_histogram(aes(y=..density..),color="Black", fill="Purple")+geom_density()
+
+```
+
+## Pie Chart
+
+```{r, echo=T}
+
+cp_group = heart %>% group_by(cp) %>% summarise(Adet=n())
+cp_group$Oran=cp_group$Adet/303
+
+
+ggplot(data=cp_group,aes(x="",y=Oran,fill=cp)) +
+    geom_bar(stat="identity",width=1) +
+    coord_polar("y",direction=-1) +
+    #Temayı boş tut
+    theme_void() +
+    #Oy oranlarını ekle
+    geom_text(aes(label = paste0("%",round(Oran,4)),x=2),size=6,angle=0) +
+    #Lejant başlığını kaldır
+    labs(fill="")
+
+```
+
+```{r, echo=T}
+
+ggplot(data = heart) + 
+  geom_bar(mapping = aes(x = cp, fill = cp), show.legend = FALSE, width = 1) + 
+  theme(aspect.ratio = 1) +
+  labs(x = NULL, y = NULL)+ 
+  coord_flip()+ 
+  coord_polar()
+
+
+```

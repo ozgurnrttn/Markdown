@@ -1,0 +1,174 @@
+---
+title: "Kalp Krizi Verisi Üzerinde Tanımlayıcı İstatistikler ve Görselleştirme"
+author: "GitHub: Ozgurnrttn"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+    df_print: paged
+  html_notebook:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, massenge = FALSE, warning=FALSE}
+library("tidyr")
+library("tidyverse")
+library("dplyr")
+library("ggplot2")
+library("readr")
+library("rstatix")
+library("pastecs")
+library("readr")
+```
+
+# Ugulama II: Lego Veri Seti İle İlgili Uygulamalar
+
+Lego veri seti veri seti uzerinde veri temizleme, veri duzenleme, gerekli gorulen fonksiyonlarin veri seti uzerinde kullanilmasi, tanimsal istatistikleri elde etme, gorsellestirme  uygulanmistir.
+
+Veri Seti kaggle uzerinden <https://www.kaggle.com/rtatman/lego-database> linki ile alinmistir.
+
+```{r}
+
+colours <- read.csv('C:/Users/oztur/OneDrive/Masaüstü/Lego/colors.csv')
+inventoryParts <- read.csv("C:/Users/oztur/OneDrive/Masaüstü/Lego/inventory_parts.csv")
+inventories <- read.csv("C:/Users/oztur/OneDrive/Masaüstü/Lego/inventories.csv")
+sets <- read.csv("C:/Users/oztur/OneDrive/Masaüstü/Lego/sets.csv")
+```
+
+# Veri Setinin Birleştirilmesi 
+```{r}
+
+lego <- sets%>%
+    inner_join(inventories, by = c("set_num" = "set_num"), suffix=c(".set",".inv"))%>%
+    inner_join(inventoryParts, by = c("id" = "inventory_id"), suffix=c("X",".invPart"))%>%
+    inner_join(colours, by = c("color_id" = "id"), suffix=c("X",".col"))
+lego
+```
+
+# Dplyr Fonksiyonu ile işlemler
+
+## Select
+
+YearColours verisiden nameX, year, name.col ve rgb değişkenlerini getir?
+
+```{r}
+select(lego, nameX, year, name.col, rgb)
+```
+
+## Filter
+
+Sadece nameX değişkeni için Weetabix Promotional House 1 olanları getir.
+
+```{r}
+filter(lego, nameX %in% c("Weetabix Promotional House 1"))
+```
+
+## Arrange
+
+Heart verisini colour_id değişkenine gore kucukten buyuge sırala?
+
+```{r}
+arrange(lego,color_id)
+```
+
+## Summarise
+
+Heart verisetinin gözlem sayısı, nameX, name.col ve is_trans değişkenlerinin sayilarini bulununz
+
+```{r}
+summarise(lego,Gozlem_Sayisi=n(),
+          nameX_Destinasyonlari=n_distinct(nameX),
+          name.col_Destinasyonlari= n_distinct(name.col),
+          is_trans_Destinasyonlari= n_distinct(is_trans))
+```
+
+## Group By
+
+nameX değişkenini kategorilere gore dagilimi
+
+```{r}
+lego %>% group_by(nameX) %>% summarise(Adet=n())
+```
+
+## Pipe Operatörü
+
+### Pipe Operatörü ile Verinin Yıllara Ve Renk Türüne Göre Verinin Gruplandırılması
+
+#### Verinin Ayrılma İşlemi
+```{r}
+
+yearColours <- lego%>%
+    mutate(decade = paste(substring(year,1,3),"0s",sep = ""))%>%
+    mutate(data.frame(t(col2rgb(paste("#",rgb,sep = "")))))%>%
+    mutate(data.frame(t(rgb2hsv(red,blue,green))))%>%
+    select(decade, red, green, blue, hue = h, saturation = s, lightness = v)%>%
+    group_by(decade)%>%
+    summarise(red = mean(red)/2.55, green = mean(green)/2.55, blue = mean(blue)/2.55, saturation = mean(saturation)*100, lightness = mean(lightness)*100)%>%
+    mutate_at(c("red","green","blue","saturation","lightness"),round)
+yearColours
+```
+
+#### Ayrılan Verinin Grafiği
+```{r}
+yearColoursPvt <- yearColours%>%
+    pivot_longer(c("red","green","blue","saturation","lightness"), names_to = "property")
+```
+
+```{r}
+#output a plot
+yearColoursPvt%>%
+    ggplot(aes(y = value, x = decade, linetype = property, shape = property, colour = property, group = property))+
+    geom_point(size = 3)+
+    geom_line(size = 1.5)+
+    theme_light()+
+    theme(axis.title.x = element_blank(), plot.title = element_text(hjust = .5))+
+    labs(title = "Yıllara Göre Lego Renkleri", y = "Yoğunluk")+
+    coord_cartesian(ylim = c(0,100), expand = F)
+```
+
+### Pipe Operatörü ile 1950 - 2017 Yılları Arasında Legolardaki Renklerin Dağılımı
+
+```{r}
+colours <- colours %>% mutate(rgb = paste0("#", rgb))
+
+brick_colours <- sets %>%inner_join(inventories, by = c("set_num" = "set_num"), suffix=c(".set",".inv"))%>%
+                         inner_join(inventoryParts, by = c("id" = "inventory_id"), suffix=c("X",".invPart"))%>%
+                         inner_join(colours, by = c("color_id" = "id"), suffix=c("X",".col")) %>% 
+                         select(year, rgb, quantity) %>% 
+                         na.omit %>%
+                         group_by(rgb, year) %>% 
+                         summarize(total = sum(quantity)) 
+
+pal <- colours$rgb
+names(pal) <- pal 
+
+breaks <- seq(1950, 2017, by = 10)
+ 
+brick_colours %>%
+          ggplot( aes(x = year, fill = rgb)) + 
+          geom_bar() + 
+          labs(x =   "", y = "")  +          
+          ggtitle("1950 - 2017 Yılları Arasında Legolardaki Renklerin Dağılımı") +
+          scale_fill_manual(values = pal)+ 
+          scale_x_discrete(limits = breaks) +          
+          theme_light( ) + 
+          theme(
+                panel.background = element_rect(fill = "#f0f0f0"),
+                plot.background = element_rect(fill = "#f8f8f8"),
+                legend.position = "none", 
+                text = element_text(size = 13),
+                plot.title = element_text(size = rel(1)),
+                axis.text.y = element_blank(), 
+                panel.grid = element_blank()
+                )
+
+```

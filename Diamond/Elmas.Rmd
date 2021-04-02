@@ -1,0 +1,258 @@
+---
+title: "Elmas Verisi Üzerinde Tanımlayıcı İstatistikler ve Görselleştirme"
+author: "Github: Ozgurnrttn"
+output:
+  html_document:
+    fig_caption: yes
+    number_sections: no
+    toc: yes
+    toc_float: yes
+    df_print: paged
+  html_notebook:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,message =F)
+```
+
+## Ugulama: Elmas
+
+Elmas veri seti üzerinde veri temizleme, veri düzenleme, gerekli görülen fonksiyonların veri seti üzerinde kullanılması, tanımsal istatistikleri elde etme, görselleştirme uygulanmıştır.
+
+Veri Seti kaggle üzerinden [linki](https://www.kaggle.com/shivam2503/diamonds) ile alınmıştır.
+
+```{r elmas}
+
+library("tidyr")
+library("tidyverse")
+library("dplyr")
+library("ggplot2")
+library("psych")
+elmas = ggplot2::diamonds
+```
+
+```{r}
+as_tibble(elmas)
+```
+
+Elmas veri setinin tamamı yukarıda gözükmektedir.
+
+```{r}
+glimpse(elmas)
+```
+
+Elmas veri setindeki değişkenlerin türleri yukarıdaki gibidir.
+
+```{r}
+describe(elmas$price,trim = 0.05,type=3)
+```
+Price(Fiyat) değişkeninin tanımlayıcı istatistikleri yukarıdaki tabloda gösterilmiştir. 
+
+Örnek verilecek olusa PRice(Fiyat) değişkeninin;
+
+* %5 kesilmiş ortalaması = 3470,84
+
+* Medyanı 2401
+
+* Çarpıklığı 1,62 ( Price değişkeni sağa çarğık denilebilir.)
+
+
+Elmas verisini istatistikleri
+
+```{r}
+names(elmas)
+```
+
+Degisken isimleri
+
+## Dplyr Fonksiyonu ile işlemler
+
+### Select
+
+Elmas verisiden clarity, depth, table ve price değişkenlerini getir?
+
+```{r }
+select(elmas,clarity:price)
+```
+
+Elmas verisiden clarity, depth, table ve price degişkenleri dışındaki değişkenleri getir?
+
+```{r}
+select(elmas,-(clarity:price))
+```
+
+### Filter
+
+Elmas veri setinde kesimi premium ve Very Good olanları getir?
+
+```{r}
+filter(elmas, cut %in% c("Premium","Very Good"))
+```
+
+Elmas veri setinde table 60'dan az ver price 400'den fazla olanları getir?
+
+```{r}
+filter(elmas,table < 60 & price > 400)
+```
+
+### Arrange
+
+Elmas verisetini price değişkenine göre küçükten büyüğe sırala.
+
+```{r}
+arrange(elmas, price)
+```
+
+Elmas veri setinde cut, clarity ve table degiskenlerini table değişkenine göre küçükten büyüğe sırala.
+
+```{r}
+arrange(select(elmas, cut, clarity,table), table)
+```
+
+Elmas veri setinde cut, clarity,price ve table degiskenlerini table değişkenine göre büyüğe küçükten sırala.
+
+```{r}
+arrange(select(elmas,cut, clarity, price, table),desc(table))
+```
+
+### Summarise
+
+Elmas verisetinin gözlem sayısı, Cut, clarity ve Color kategori sayilarini ve ortalama table sayisini bulununz
+
+```{r}
+summarise(elmas,GozlemSayisi=n(),
+          CutDestinasyonlari=n_distinct(cut),
+          ClarityDestinasyonlari= n_distinct(clarity),
+          ColorDestinasyonlari= n_distinct(color),
+          OrtalamaTable= mean(table, na.rm = T))
+```
+
+### Pipe operatoru
+
+Depth ve table değişkenleri icin depth\<table kosulu altinda toplam table'lı bulun
+
+```{r}
+elmas %>% 
+  select(depth,table) %>% 
+  filter(depth< table) %>% 
+  summarise(genel_toplam = sum(table))
+```
+
+Ortalama carat miktarını bulunuz?
+
+```{r}
+elmas %>% select(carat) %>% sum()
+```
+
+Rengi J olan depthleri bulunuz?
+
+```{r}
+head(elmas %>% select(color, depth) %>% filter(color=="J"))
+```
+
+Cut değişkenini kategorilere gore dagilimi
+
+```{r}
+elmas %>% group_by(cut) %>% summarise(Adet=n())
+```
+
+Color degiskeninin kategorilere gore dagilimi
+
+```{r}
+elmas %>% group_by(color) %>% summarise(Adet=n())
+```
+
+Cut degiskeninin kategorilere gore dagilimi
+
+```{r}
+elmas %>% group_by(clarity) %>% summarise(Adet=n())
+```
+
+Cut ve Clarity degiskenlerini ikili dagilimi
+
+```{r}
+elmas %>% group_by(cut, clarity) %>% summarise(Adet=n())
+```
+
+## Grafikler
+
+### Point plot
+
+```{r, echo=T}
+ggplot(data=elmas)+ geom_point(mapping = aes(x=price,y=table,color=clarity))
+```
+
+```{r, echo=T}
+ggplot(data=elmas)+ geom_bar(mapping = aes(x=cut, fill=clarity))
+```
+
+```{r, echo=T}
+ggplot(data=elmas)+ geom_bar(mapping = aes(x=cut, fill=clarity),position = "fill")
+```
+
+### Box Plot
+
+```{r, echo=T}
+ggplot(data=elmas)+geom_boxplot(mapping = aes(x=clarity, y=table, color=clarity))
+```
+
+```{r, echo=T}
+ggplot(data=elmas)+geom_boxplot(mapping = aes(x=cut, y=table, color=cut))
+```
+
+```{r, echo=T}
+ggplot(data=elmas)+geom_boxplot(mapping = aes(x=color, y=table, color=color))
+```
+
+### Histogram
+
+```{r, echo=T}
+
+ggplot(diamonds,aes(x = cut, fill = cut)) + 
+  geom_bar()+
+  labs( x = "Elmasların kesim türü",
+        y = "Frekanslar",
+        title = "Kesimlerine göre elmas türleri")
+```
+
+```{r, echo=T}
+ggplot(data=elmas,aes(x=price))+geom_histogram(aes(y=..density..),color="Black", fill="Blue")+geom_density()
+```
+
+```{r, echo=T}
+ggplot(data=elmas,aes(x=depth))+geom_histogram(aes(y=..density..),color="Black", fill="Red")+geom_density()
+```
+
+```{r, echo=T}
+ggplot(data=elmas,aes(x=carat))+geom_histogram(aes(y=..density..),color="Black", fill="Purple")+geom_density()
+```
+
+```{r, echo=T}
+
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```
+
+### Pasta Grafiği
+```{r, echo=T}
+
+ggplot(diamonds,aes(x = "", fill=clarity)) + 
+  geom_bar(width = 1) + 
+  coord_polar (theta="y")
+
+```
+
+```{r, echo=T}
+
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut), show.legend = FALSE, width = 1) + 
+  theme(aspect.ratio = 1) +
+  labs(x = NULL, y = NULL)+ 
+  coord_flip()+ 
+  coord_polar()
+
+```
