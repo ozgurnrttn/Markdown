@@ -26,7 +26,7 @@ Elmas veri seti üzerinde veri temizleme, veri düzenleme, gerekli görülen fon
 Veri Seti kaggle üzerinden [linki](https://www.kaggle.com/shivam2503/diamonds) ile alınmıştır.
 
 ```{r elmas}
-
+library("plotly")
 library("tidyr")
 library("tidyverse")
 library("dplyr")
@@ -186,14 +186,6 @@ elmas %>% group_by(cut, clarity) %>% summarise(Adet=n())
 ggplot(data=elmas)+ geom_point(mapping = aes(x=price,y=table,color=clarity))
 ```
 
-```{r, echo=T}
-ggplot(data=elmas)+ geom_bar(mapping = aes(x=cut, fill=clarity))
-```
-
-```{r, echo=T}
-ggplot(data=elmas)+ geom_bar(mapping = aes(x=cut, fill=clarity),position = "fill")
-```
-
 ### Box Plot
 
 ```{r, echo=T}
@@ -237,6 +229,14 @@ ggplot(data = diamonds) +
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
 ```
 
+```{r, echo=T}
+ggplot(data=elmas)+ geom_bar(mapping = aes(x=cut, fill=clarity))
+```
+
+```{r, echo=T}
+ggplot(data=elmas)+ geom_bar(mapping = aes(x=cut, fill=clarity),position = "fill")
+```
+
 ### Pasta Grafiği
 ```{r, echo=T}
 
@@ -254,5 +254,18 @@ ggplot(data = diamonds) +
   labs(x = NULL, y = NULL)+ 
   coord_flip()+ 
   coord_polar()
+
+```
+
+### 3D Plot
+
+```{r}
+
+plot_ly(diamonds, x = ~carat, y = ~depth, z = ~table, color = ~color, colors = c('#BF382A', '#0C4B8E')) %>%
+  add_markers() %>%
+  layout(scene = list(xaxis = list(title = 'carat'),
+                     yaxis = list(title = 'depth'),
+                     zaxis = list(title = 'table')))
+
 
 ```
