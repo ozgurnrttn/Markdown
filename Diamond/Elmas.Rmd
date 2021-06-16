@@ -25,13 +25,14 @@ Elmas veri seti üzerinde veri temizleme, veri düzenleme, gerekli görülen fon
 
 Veri Seti kaggle üzerinden [linki](https://www.kaggle.com/shivam2503/diamonds) ile alınmıştır.
 
-```{r elmas}
+```{r, warning=F , message=FALSE}
 library("plotly")
 library("tidyr")
 library("tidyverse")
 library("dplyr")
 library("ggplot2")
 library("psych")
+library(scales)
 elmas = ggplot2::diamonds
 ```
 
@@ -205,10 +206,11 @@ ggplot(data=elmas)+geom_boxplot(mapping = aes(x=color, y=table, color=color))
 ```{r, echo=T}
 
 ggplot(diamonds,aes(x = cut, fill = cut)) + 
-  geom_bar()+
+  geom_bar(aes(y = (..count..)))+ geom_text(aes(y=(..count..), vjust = -0.5, label = ifelse((..count..)== 0 ,"", scales::percent((..count..)/sum(..count..)))), stat = "count")+
   labs( x = "Elmasların kesim türü",
         y = "Frekanslar",
         title = "Kesimlerine göre elmas türleri")
+ 
 ```
 
 ```{r, echo=T}
