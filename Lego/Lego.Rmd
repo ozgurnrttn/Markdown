@@ -1,5 +1,5 @@
 ---
-title: "Kalp Krizi Verisi Üzerinde Tanımlayıcı İstatistikler ve Görselleştirme"
+title: "Ledo Veri Setlerinin Birleştirilmesi Ve Üzerinde Tanımlayıcı İstatistikler ve Görselleştirme"
 author: "GitHub: Ozgurnrttn"
 output:
   html_document:
@@ -30,7 +30,7 @@ library("pastecs")
 library("readr")
 ```
 
-# Ugulama II: Lego Veri Seti İle İlgili Uygulamalar
+# Ugulama: Lego Veri Seti İle İlgili Uygulamalar
 
 Lego veri seti veri seti uzerinde veri temizleme, veri duzenleme, gerekli gorulen fonksiyonlarin veri seti uzerinde kullanilmasi, tanimsal istatistikleri elde etme, gorsellestirme  uygulanmistir.
 
@@ -38,10 +38,10 @@ Veri Seti kaggle uzerinden <https://www.kaggle.com/rtatman/lego-database> linki 
 
 ```{r}
 
-colours <- read.csv('C:/Users/oztur/OneDrive/Masaüstü/Lego/colors.csv')
-inventoryParts <- read.csv("C:/Users/oztur/OneDrive/Masaüstü/Lego/inventory_parts.csv")
-inventories <- read.csv("C:/Users/oztur/OneDrive/Masaüstü/Lego/inventories.csv")
-sets <- read.csv("C:/Users/oztur/OneDrive/Masaüstü/Lego/sets.csv")
+colours <- read.csv('C:/Users/Reddithun/Documents/GitHub/Markdown/Lego/colors.csv')
+inventoryParts <- read.csv("C:/Users/Reddithun/Documents/GitHub/Markdown/Lego/inventory_parts.csv")
+inventories <- read.csv("C:/Users/Reddithun/Documents/GitHub/Markdown/Lego/inventories.csv")
+sets <- read.csv("C:/Users/Reddithun/Documents/GitHub/Markdown/Lego/sets.csv")
 ```
 
 # Veri Setinin Birleştirilmesi 
