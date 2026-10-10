@@ -41,13 +41,11 @@ rmarkdown::render("Heart/Heart.Rmd")
 Kullanılan başlıca paketler: `tidyverse`, `rstatix`, `pastecs`, `plotly`, `car`, `GGally`, `lmtest`,
 `Amelia`. Her raporun tam paket listesi kendi `.Rmd` dosyasının başındadır.
 
-Not: `Makine-Ogrenmesi/ML.Rmd` içindeki dünya haritası bölümü `gdp.csv` dosyasını okur; bu dosya
-[Machine-Learning](https://github.com/ozgurnrttn/Machine-Learning) reposundadır.
-
 ## Veri
 
 - Mutluluk: [World Happiness Report 2017](https://worldhappiness.report/ed/2017/),
   [Kaggle](https://www.kaggle.com/adwaywadekar/social-progress-and-happiness)
+- Dünya haritası (`Makine-Ogrenmesi/gdp.csv`): [Dünya Bankası](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD), 2020
 - Kalp: [Heart Disease UCI](https://www.kaggle.com/ronitf/heart-disease-uci)
 - Elmas: `ggplot2::diamonds` ([Kaggle](https://www.kaggle.com/shivam2503/diamonds))
 - Pokémon: [alopez247/pokemon](https://www.kaggle.com/alopez247/pokemon)
