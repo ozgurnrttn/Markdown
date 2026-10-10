@@ -38,10 +38,10 @@ Veri Seti kaggle uzerinden <https://www.kaggle.com/rtatman/lego-database> linki 
 
 ```{r}
 
-colours <- read.csv('C:/Users/Reddithun/Documents/GitHub/Markdown/Lego/colors.csv')
-inventoryParts <- read.csv("C:/Users/Reddithun/Documents/GitHub/Markdown/Lego/inventory_parts.csv")
-inventories <- read.csv("C:/Users/Reddithun/Documents/GitHub/Markdown/Lego/inventories.csv")
-sets <- read.csv("C:/Users/Reddithun/Documents/GitHub/Markdown/Lego/sets.csv")
+colours <- read.csv('colors.csv')
+inventoryParts <- read.csv("inventory_parts.csv")
+inventories <- read.csv("inventories.csv")
+sets <- read.csv("sets.csv")
 ```
 
 # Veri Setinin Birleştirilmesi 

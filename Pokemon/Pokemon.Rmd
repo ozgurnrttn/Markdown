@@ -92,7 +92,7 @@ Su_1, Su_2 ve Su_3.
 ```{r message=FALSE, warning=FALSE}
 library(readr)
 library(tidyverse)
-pokemon <- read_csv("C:/Users/oztur/OneDrive/Masaüstü/Calisma/pokemon_alopez247.csv")
+pokemon <- read_csv("pokemon_alopez247.csv")
 as_tibble(pokemon)
 ```
 

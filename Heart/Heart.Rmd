@@ -56,7 +56,7 @@ library("readr")
 ```
 
 ```{r, massenge = FALSE, warning=FALSE}
-heart <- read_csv("C:/Users/oztur/OneDrive/Masaüstü/heart.csv")
+heart <- read_csv("heart.csv")
 heart$cp<-factor(heart$cp,levels = c(0,1,2,3),labels=c("Tipik Anjina","Atipik Anjina","Non-Anginal Pain"," Asemptomatik"))
 heart$sex<-factor(heart$sex,levels = c(0,1),labels=c("Kadın","Erkek"))
 heart$exang<-factor(heart$exang,levels = c(0,1),labels=c("No","Yes"))

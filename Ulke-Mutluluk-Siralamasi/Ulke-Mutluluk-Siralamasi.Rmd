@@ -111,7 +111,7 @@ $$Cov(X,Y)=∑(x_i-x ̅)(y_i-y ̅)/n$$
 
 İkiden çok değişken için kovaryans matrisi, pozitif tanımlıdır ve değişkenlerin birlikte değişim miktarı ile ilgili bilgi verir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/Correlation.png)
+![](Formul/Correlation.png)
 
 ### 1.3.1. Pearson İlişki Katsayısı
 
@@ -148,7 +148,7 @@ Veri sayısının az olduğu durumlar için fikir edinmek amaçı ile, özellikl
 Histograma benzer.
 Verilerin daha sık aralıkta ve böylece daha dar bir alanda özetlendiği çizimlerdir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/point.png)
+![](Formul/point.png)
 
 ### 1.5.2. Kutu Grafiği
 
@@ -169,7 +169,7 @@ Q_3 ve Q_1farkı arasında yatay veya dikey eksende kutu çizilir.
 Kutunun içine ortanca çizgisi çizilir ve her iki ucundan, $A=Q_1-1.5d$ ve $B=Q_3+ 1.5d$ Uzunlukları kuşkulu gözlem sınırları olarak tanımlar.
 Bunlara eşik değerleri denir.Uç değerler eşik değerlerinin dışında olur ve işaretler.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/box.png)
+![](Formul/box.png)
 
 ### 1.5.3 Histogram
 
@@ -180,7 +180,7 @@ Veri genişliğini eşit uzunluktaki aralıklara bölerek gösterilir.
 • Genellikle verini yoğunlaştığı konumları gösterir.
 • Büyük veya küçük değerlere çarpık olması verilerde dönüşüm yapılabilceğini gösterir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/histogram.png)
+![](Formul/histogram.png)
 
 Çizimlerde alınacak sınıf sayısı için birçok eşitlik kullanılır.
 Büyük veri kümeleri için Sturges'in $$k=⌈loga(2n)+1 ⌉ ~ ve~ h=Genişlik/k$$
@@ -193,14 +193,14 @@ Burada h =Sınıf sayısıdır.
 Veri kümesini belirli bir dağılıma uyumunun incelenmesidir.
 Genelde en çok veri kümesinin normal dağılımlı olup olmadığını anlamak için yapılır.Ayrıca iki ayrı veri kümesinin aynı dağılımlı olup olmadığını göstermek içinde kullanılır.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/qq.jpg)
+![](Formul/qq.jpg)
 
 ### 1.5.5. Saçılım Grafiği
 
 İki ya da daha çok değişken arasındaki çizimler, aykırı değerlerin varlığı bakımından, değişkenlerin birliktelikleri yada bağımsızlıkları değişkenlerin etkinlikleri ve işlevsel yapı bakımından önemli bilgi verirler.
 İki değişken arasındaki ilişkinin yapısını ve yönünü verir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/scatter.png)
+![](Formul/scatter.png)
 
 ## 1.6. Verilerdeki Eksik Değerler
 
@@ -311,7 +311,7 @@ $α_4<3$ ise veri normale göre basıktır
 Normallik varsayımının incelemesinin amacı verilmiş bir veri dizisinin normal dağılıma uygunluk iyiliğinin incelenmesidir.
 Test edilmesinde grafiksel yöntemler ve hipotez testleri en çok kullanılan yöntemlerdir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/normallik.png)
+![](Formul/normallik.png)
 
 # 3.VARYANS ANALİZİ (ANOVA)
 
@@ -345,21 +345,21 @@ Burada; i=1,2,...,k ve j=1,2,..., ni olmak üzere k: grup sayısını j: birim s
 grupa ait örnek büyüklüğünü göstermektedir.
 Buradan yola çıkarak incelenen değişkene ait genel ortalama,
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/1.png)
+![](Formul/1.png)
 
 **Bu durumda genel kareler toplamı,**
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/2.png)
+![](Formul/2.png)
 
 Genel kareler toplamı gruplar arası kareler toplamı ve grup içi kareler toplamı olarak parçalanabilir.
 **GKT=GAKT+GİKT** Grup içi kareler toplamına hata kareler toplamında denilmektedir.
 **Gruplar arası kareler toplamı,**
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/3.png)
+![](Formul/3.png)
 
 **Grup içi kareler toplamı,**
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.png)
+![](Formul/4.png)
 
 Genel serbestlik derecesi (gsd)=N-1 Gruplar arası serbetlik derecesi(gasd)=k-1 Grup içi serbestlik derecesi (hsd)=N-k $$N-1=(k-1)+(N-k)   $$
 
@@ -402,7 +402,7 @@ $H_A$: k örnekten an az birinin medyanı diğerlerinden farklıdır.
 KWH testinde gözlem değerleri yerine bu değerlere ait sıralama puanları kullanılır.
 Her grubun sıralama puanları toplamı ele alınarak H test istatistiği aşağıdaki gibi hesaplanır.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/5.png)
+![](Formul/5.png)
 
 Burada $R^i$ i.
 Gruba ait sıralama puanlarının ortalamasını, 𝑅 ise sıralama puanlarının genel ortalamasını göstermektedir.
@@ -431,15 +431,15 @@ $y_i, β_1, β_2,..., β_k$ gözlemleri ile regresyon doğrusu arasındaki farkl
 Denklem (4.1)'deki regresyon katsayılarının kestirimi için kullanılır.
 n\>k gözlemin olduğunu varsayılarak aşağıdaki denklem yazılır.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.1.png)
+![](Formul/4.1.png)
 
 En küçük kareler fonksiyonu aşağıdaki gibidir:
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.2.png)
+![](Formul/4.2.png)
 
 Denklem (4.2)'indeki $β_0 , β_1,β_2,..., β_k$ göre ayrı ayrı türevi alınıp sıfıra eşitlenirse,
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.3.png)
+![](Formul/4.3.png)
 
 Denklemini verir.
 Bu denklemler en küçük kareler normal denklemleri olarak adlandırılır.
@@ -450,30 +450,30 @@ Verilerin ve sonuçların daha kısa ve öz bir biçimde sağlar Denklem(4.2)'da
 biçimindedir.
 Buradak, matrisler aşağıdaki gibidir;
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.4.png)
+![](Formul/4.4.png)
 
 y:Gözlemler vektörü X:Bağımsız değişkenler matrisi β:Regeresyon Katsayıları vektörü ε:Rastgele hatalar vektörü Aşağıda verilen S(β) fonsiyonunu minimize ederek $\hat{\beta}$ en küçük kareler kestiricileri vektörünü elde ederiz:
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.5.png)
+![](Formul/4.5.png)
 
 S(β) aşağıdaki gibi elde edilir:
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.6.png)
+![](Formul/4.6.png)
 
-Denklem (4.3)'indeki β'ya göre türevi alınıp basitlştirilirse: ![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.7.png)
+Denklem (4.3)'indeki β'ya göre türevi alınıp basitlştirilirse: ![](Formul/4.7.png)
 
 Denklem(4.4)'ün matris gösterimi aşağıdaki gibidir
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.8.png)
+![](Formul/4.8.png)
 
 Denklem (4.5)'ün matris gösterimi aşağıdaki gibidir
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.9.png)
+![](Formul/4.9.png)
 
 Denklemi (4.6) çözmek için her iki tarafı (X'X)-1 ile çarpılır.
 β'nın en küçük kareler kestiricisi bulunur.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.10.png)
+![](Formul/4.10.png)
 
 #### 4.1.1.2. $σ^2$'nin kestirimi
 
@@ -481,20 +481,20 @@ Denklemi (4.6) çözmek için her iki tarafı (X'X)-1 ile çarpılır.
 Bu ise yalnızca x'in en az bir değeri için y üzerinde farklı gözlemler olduğunda ya da $𝜎^2$'ye ilişkin önceliğinden elde edilmiş bilgi bulunduğunda mümkün olmalıdır.
 Bu yaklaşım kullanılamadığında $𝜎^2$, artık veya hata kareler toplamından elde edilir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.11.png)
+![](Formul/4.11.png)
 
 $e=y-X\hat{\beta}$ yerine konulmasıyla aşağıdaki ifade elde edilir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.12.png)
+![](Formul/4.12.PNG)
 
 Denklem (4.7)'den son denklem aşağıdaki gibi olur.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.13.png)
+![](Formul/4.13.png)
 
 Artık kareler toplamını n-2 serbestlik derecesine sahiptir.
 SSRes'in beklenen değeri $E(SS_{Res})=(n-p)σ^2$ olduğu göstermektedir; dolayısı ile $σ^2$'nin yansız bir kestiricisi aşağıdaki gibidir:
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.14.png)
+![](Formul/4.14.png)
 
 #### 4.1.1.3. Dummy Değişken
 
@@ -520,16 +520,16 @@ Bu iki yapay değişkenlerde referans grubuna ve hesaba katılmayan gruba sıfı
 
 Regresyonda amaçlardan birinin de bağımlı değişkendeki kaynağını araştırmak için kullanılır.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.15.png)
+![](Formul/4.15.png)
 
 TKT:Toplam kareler Toplamı(Total Sum Of Square/SYY) RKT:Regresyon Kareler Toplamı(Regression Sum Of Squares/SSReg) AKT:Artıklar Kareler Toplamı(Residuals Sum Of Squares/SSRes) Bu sonuçlara göre bağımsız değişkenin bağımlı değişkendeki değişimin % kaçını açıkladığınının göstergesi olan belirtme katsayısı şu şekilde tanımlanır.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.16.png)
+![](Formul/4.16.png)
 
 k tane bağımsız değişkenin doğrusal regresyon modelinde belirleme katsayısı bağımlı değişkenin % kaçını açıkladığını belirtir.
 Belirtme katsayısı iki bağımsız değişkenli doğrusal regresyon model için;
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.17.png)
+![](Formul/4.17.png)
 
 ile hesaplanır.
 Belirtme katsayısının yukarıdaki eşitlik ile hesaplanması fazla zaman alır.
@@ -537,11 +537,11 @@ Belirtme katsayısının yukarıdaki eşitlik ile hesaplanması fazla zaman alı
 Matris işlemleri ile $\hat{Y}_i$değerinin hesaplanmasına gerek yoktur.
 Denklem (4.8)'te verilen aşağıdaki eşitlikler verilmişti.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.18.png)
+![](Formul/4.18.png)
 
 Bu durumda belirme katsayısı;
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.19.png)
+![](Formul/4.19.png)
 
 eşitliği şeklinde olur.
 
@@ -553,16 +553,16 @@ Uygun hipotezler aşağıdaki gibidir: $$H_0=β_1=β_2=...=β_k$$ $$H_A=En~az~bi
 $H_0$ hipotezinin reddedilmesi için $x_1,...,x_k$ bağımsız değişkenlerinden en az birinin modele anlamlı katkı sağlaması gerekmektedir.
 Bu test basit doğrusal regresyonun genelleştirilmesidir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.20.png)
+![](Formul/4.20.png)
 
 $H_0$ hipotezi doğru iken;
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.21.png)
+![](Formul/4.21.png)
 
 olacak şekilde dağılır.
 Ve F istatistiğinin tanımından;
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.22.png)
+![](Formul/4.22.PNG)
 
 oranının Fk,n-k-1 dağıldığı görülür.
 $H_0$ hipotezini test etmek için $F_h$ test değeri hesaplanır ve $F_h> F_{k,n-k-1}$ geçerli ise $H_0$ reddedilir.
@@ -571,7 +571,7 @@ $H_0$ hipotezini test etmek için $F_h$ test değeri hesaplanır ve $F_h> F_{k,n
 
 Y ve $X_1$§ değişkenleri arasındaki korelasyon katsayısı hesaplanırken herhangi bir başka değişkenin etkisinin Y ve $X_1$ değişkenlerini üzerindeki etkisi arındırıldıktan sonraki iki değişkenin arasındaki korelasyon katsayısıdır.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.23.png)
+![](Formul/4.23.png)
 
 ### 4.1.6. Artıkların İncelenmesi
 
@@ -583,11 +583,11 @@ Artıkların analizi farklı türdeki model yetersizliklerini ortaya çıkarılm
 Artık çizimleri regresyon modelinin verilere ne kadar uyumlu olduğunu gösterir.
 Artıklar sıfır ortalamaya sahip olup yaklaşık ortalama varyansları MSRes değeridir.Standartlaştırılmış artık: Bir artığın MSRes değeri ile kestirildiğinden artıklar için standartlaştıırlmış artık denir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.24.png)
+![](Formul/4.24.png)
 
 Standartlaştırılmış artık $(|d_i|>3)$ potansiyel bir aykırı değer işaretidir.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/artik.png)
+![](Formul/artik.png)
 
 **1. Sabit Varyanslılık**
 
@@ -665,7 +665,7 @@ $$H_A:P≠0(Otokorelasyon vardır.)$$
 
 seçilen bir anlamlılık düzeyi ile gözlem sayısı ve açıklayıcı değişken sayısına göre, Durbin-Watson tablosundan, d istatistiğinin alt $(d_L)$ ve üst $(d_U)$ sınırları bulunur.Sonra Kritik oran d istatistiği hesaplanır.
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/4.25.png)
+![](Formul/4.25.png)
 
 ### 4.1.7. Çoklu Bağıntı
 
@@ -771,8 +771,8 @@ library(fBasics)
 library(car)
 library(zoo)
 library(lmtest)
-happy <- read.csv("~/Masaüstü/mutluluk.csv")
-ln_happy <- read.csv("~/Masaüstü/Ln-mutluluk.csv")
+happy <- read.csv("mutluluk.csv")
+ln_happy <- read.csv("Ln-mutluluk.csv")
 attach(happy)
 ```
 
@@ -984,7 +984,7 @@ Doğrudaki değerlerin topladığı yerdeki gölgelerin gölgelerin büyüklüğ
 
 ### 5.1.3.7. Kişisel Özgürlük
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/pie.png)
+![](Formul/pie.png)
 
 Şekil 4.1'de pasta grafiği ülkelerdeki insanların kendilerini özgürlük dağılımın göstermektedir.
 Yani ülkelerin %19'u kendini özgür hisstemiyor, %50'si yarı özgür görüyor, %31'i kendinin özgür görüyor.
@@ -1166,7 +1166,7 @@ Yani %95 güven ile kurulan model anlamlıdır.
 
 **1.Sabit varyanslılık**
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/artik1.png)
+![](Formul/artik1.png)
 
 Grafikte artıkların doğrusal olmayan herhangi bir kalıpta olmadığını gösterir.
 Artıkların saçılım grafiği incelendiğinde çizilen doğrunun düz çizgiye yakın olduğu görülür ve doğrudaki gölgeler sapmaların yüksek olduğunun gösterir yani artıkların standart sapması yüksektir.
@@ -1174,7 +1174,7 @@ Değişen varyanslılık yoktur.
 
 **2. Hataların Normal Dağılması**
 
-![](C:/Users/oztur/OneDrive/Documents/Masaüstü/DC/Formul/qq-a.png)
+![](Formul/qq-a.png)
 
 Q-Q çizmlerinde ise artıkların normal dağılımı yakın görülmektedir.
 Hatalar hafif sola çarpıktır.
